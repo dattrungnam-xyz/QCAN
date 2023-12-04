@@ -1,0 +1,26 @@
+.search__container {
+    margin-top: 10px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    pading: 25px;
+    background: #fafafa;
+}
+.search__container--input {
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.search__icon {
+    font-size: 18px;
+    color: #999;
+}
+
+.search__input {
+    border: none;
+    outline: none;
+    font-size: 18px;
+    flex: 1;
+    background: transparent;
+}
