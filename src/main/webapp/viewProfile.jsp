@@ -110,7 +110,7 @@
                 </div>
             </div>
             <div class="user__bio">
-                <%=user.getBio()%>
+                <%if(user.getBio()!=null && !user.getBio().equals("")){%><%=user.getBio()%><%}%>
             </div>
             <div class="user__social">
                 <div class="user__social--follow">
@@ -120,8 +120,22 @@
               </span>
                 </div>
                 <div class="user__social--link">
-                    <a href="<%=user.getLinkIns()%>"><i class="bx user__social--icon bxl-instagram"></i></a>
-                    <a href="<%=user.getLinkFB()%>"><i class="bx user__social--icon bxl-facebook"></i></a>
+                    <%
+                        if (!user.getLinkFB().equals("") && user.getLinkFB()!=null){
+                            %>
+                                <a href="<%=user.getLinkFB()%>"><i class="bx user__social--icon bxl-facebook"></i></a>
+                            <%
+                        }
+                    %>
+                    <%
+                        if (!user.getLinkIns().equals("") && user.getLinkIns()!=null){
+                            %>
+                                <a href="<%=user.getLinkIns()%>"><i class="bx user__social--icon bxl-instagram"></i></a>
+                            <%
+                        }
+                    %>
+
+
                 </div>
             </div>
             <div class="profile__edit">

@@ -51,6 +51,7 @@ public class CheckLoginController extends HttpServlet {
             RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
             rd.forward(request,response);
         }
+
     }
 
 }
