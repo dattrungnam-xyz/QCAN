@@ -15,13 +15,13 @@
     <link rel="stylesheet" type="text/css" href="css/content.css">
     <link rel="stylesheet" type="text/css" href="css/editProfile.css">
     <link rel="stylesheet" type="text/css" href="css/profile.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link
             href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,700;1,100;1,300;1,400&display=swap"
             rel="stylesheet"
     />
-    <link rel="stylesheet" href="profile.css" />
+    <link rel="stylesheet" href="profile.css"/>
     <link
             href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
             rel="stylesheet"
@@ -33,7 +33,7 @@
     Account user = (Account) request.getAttribute("user");
     session = request.getSession();
     Boolean isLogin = (Boolean) session.getAttribute("isLogin");
-    if (isLogin != null && isLogin == true && user!= null) {
+    if (isLogin != null && isLogin == true && user != null) {
 %>
 
 <div class="container">
@@ -84,7 +84,7 @@
                 </div>
             </div>
             <div class="header__menu">
-                <input hidden id="header__menu--toggle" type="checkbox" />
+                <input hidden id="header__menu--toggle" type="checkbox"/>
                 <label class="header__menu--label" for="header__menu--toggle">
                     <i class="bx bx-menu-alt-right header__menu--button"></i>
                 </label>
@@ -120,8 +120,20 @@
               </span>
                 </div>
                 <div class="user__social--link">
-                    <a href="<%=user.getLinkIns()%>"><i class="bx user__social--icon bxl-instagram"></i></a>
+                    <%
+                        if (!user.getLinkFB().equals("") && user.getLinkFB() != null) {
+                    %>
                     <a href="<%=user.getLinkFB()%>"><i class="bx user__social--icon bxl-facebook"></i></a>
+                    <%
+                        }
+                    %>
+                    <%
+                        if (!user.getLinkIns().equals("") && user.getLinkIns() != null) {
+                    %>
+                    <a href="<%=user.getLinkIns()%>"><i class="bx user__social--icon bxl-instagram"></i></a>
+                    <%
+                        }
+                    %>
                 </div>
             </div>
             <div class="profile__edit">
@@ -191,8 +203,6 @@
         </div>
     </section>
 </div>
-
-
 
 
 <%

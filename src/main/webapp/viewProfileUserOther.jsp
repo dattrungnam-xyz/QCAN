@@ -1,4 +1,7 @@
-<%@ page import="com.example.qcan.model.bean.Account" %><%--
+<%@ page import="com.example.qcan.model.bean.Account" %>
+<%@ page import="com.example.qcan.model.bean.Follow" %>
+<%@ page import="java.net.URLEncoder" %>
+<%--
   Created by IntelliJ IDEA.
   User: ADMIN
   Date: 12/5/2023
@@ -31,6 +34,7 @@
 
 <%
     Account user = (Account) request.getAttribute("userOther");
+    Follow isFl = (Follow) request.getAttribute("isFl");
     session = request.getSession();
     Boolean isLogin = (Boolean) session.getAttribute("isLogin");
     if (isLogin != null && isLogin == true && user != null) {
@@ -134,16 +138,30 @@
                 </div>
             </div>
             <div class="profile__edit">
+                <%
+
+                    // Set the current URL in the session
+                    session.setAttribute("currentUserView", user.getId());
+                %>
+                <%if(isFl.isFled() ==false){%>
+                <form method="post" action="FollowController?Action=Follow&Id=<%=user.getId()%>">
                 <button style="cursor: pointer;color:white !important; background-color: black !important"
                         class="profile__edit--button">
-                    <a style="color:white; text-decoration: none;" href="">
+
                         Theo dõi
-                    </a>
-                </button>
-                <button class="profile__edit--button">
-
 
                 </button>
+                </form>
+                <%} else {%>
+                <form method="post" action="FollowController?Action=Unfollow&Id=<%=user.getId()%>">
+                <button style="cursor: pointer;color:black !important; background-color: white !important"
+                        class="profile__edit--button">
+
+                        Bỏ theo dõi
+                </button>
+                </form>
+                <%}%>
+
             </div>
 
             <div class="profile__status">

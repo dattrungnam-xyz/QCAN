@@ -1,7 +1,9 @@
 package com.example.qcan.controller;
 
 import com.example.qcan.model.bean.Account;
+import com.example.qcan.model.bean.Follow;
 import com.example.qcan.model.bo.CheckLoginBO;
+import com.example.qcan.model.bo.FollowBO;
 import com.example.qcan.model.bo.SignUpBO;
 import com.example.qcan.model.bo.UserBO;
 import com.mysql.cj.Session;
@@ -36,6 +38,11 @@ public class UserController extends HttpServlet {
             {
 //                Account user = userBO.getAccount(username);
                 Account userOther = userBO.getUser(Integer.parseInt(Id));
+                FollowBO followBO = new FollowBO();
+
+                Follow isFl = followBO.checkFollow(IdSession,Integer.parseInt(Id));
+
+                request.setAttribute("isFl",isFl);
                 request.setAttribute("userOther",userOther);
                 destination = "/viewProfileUserOther.jsp";
             }
