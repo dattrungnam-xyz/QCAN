@@ -78,7 +78,7 @@
                                     <i class="bx bx-menu-alt-right header__menu--button"></i>
                                 </label>
                                 <div class="header__menu--list">
-                                    <div class="header__menu--item">Đăng xuất</div>
+                                    <div class="header__menu--item"><a href="LogOutController">Đăng xuất</a></div>
                                 </div>
                             </div>
                         </div>

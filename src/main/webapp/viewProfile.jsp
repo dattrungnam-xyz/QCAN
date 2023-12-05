@@ -110,7 +110,7 @@
                 </div>
             </div>
             <div class="user__bio">
-                <%if(user.getBio()!=null){%><%=user.getBio()%><%}%>
+                <%=user.getBio()%>
             </div>
             <div class="user__social">
                 <div class="user__social--follow">
