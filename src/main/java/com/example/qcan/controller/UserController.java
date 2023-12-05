@@ -4,6 +4,7 @@ import com.example.qcan.model.bean.Account;
 import com.example.qcan.model.bo.CheckLoginBO;
 import com.example.qcan.model.bo.SignUpBO;
 import com.example.qcan.model.bo.UserBO;
+import com.mysql.cj.Session;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -28,6 +29,10 @@ public class UserController extends HttpServlet {
         {
              destination = "/editProfile.jsp";
         }
+        else if (Action.equals("ChangePassword"))
+        {
+            destination = "/changePassword.jsp";
+        }
 
         UserBO userBO = new UserBO();
         HttpSession session = request.getSession();
@@ -39,6 +44,21 @@ public class UserController extends HttpServlet {
         rd.forward(request,response);
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String Action = (String)request.getParameter("Action");
+
+        if(Action.equals("Update"))
+        {
+            updateUser(request,response);
+        }else if(Action.equals("ChangePassword"))
+        {
+            changePassword(request,response);
+        }
+
+
+    }
+
+    private void updateUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
         String Id = (String) request.getParameter("Id");
         String Email = (String) request.getParameter("email");
         String Nickname = (String) request.getParameter("nickname");
@@ -66,15 +86,44 @@ public class UserController extends HttpServlet {
             }else {
                 if(!userBO.isValid(Integer.parseInt(Id),"nickname",Nickname))
                 {
-                    destination = "/UserController?error=Nickname already exist!";
+                    destination = "/UserController?Action=Update&error=Nickname already exist!";
                 }
                 if(!userBO.isValid(Integer.parseInt(Id),"email",Email))
                 {
-                    destination = "/UserController?error=Email already exist!";
+                    destination = "/UserController?Action=Update&error=Email already exist!";
                 }
             }
             response.sendRedirect(request.getContextPath() + destination);
         }
     }
-
+    private void changePassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        String destination = null;
+        String currentPassword = (String) request.getParameter("currentPassword");
+        String newPassword = (String) request.getParameter("newPassword");
+        String confirmPassword = (String) request.getParameter("confirmPassword");
+        String Id = (String) request.getParameter("Id");
+        UserBO userBO = new UserBO();
+        if(!newPassword.equals(confirmPassword))
+        {
+            destination = "/UserController?Action=ChangePassword&error=New password and password confirm does not match!";
+        }
+        else {
+           if(Id == null)
+           {
+               HttpSession session = request.getSession();
+               Id = (String)session.getAttribute("Id");
+           }
+            if(userBO.checkPassword(Integer.parseInt(Id),currentPassword ))
+            {
+                //update password
+                userBO.updatePassword(Integer.parseInt(Id),newPassword);
+                destination = "/UserController?Action=ChangePassword&message=Password Changed!";
+            }
+            else {
+                destination = "/UserController?Action=ChangePassword&error=Current password incorrect!";
+            }
+        }
+        response.sendRedirect(request.getContextPath() + destination);
+    }
 }

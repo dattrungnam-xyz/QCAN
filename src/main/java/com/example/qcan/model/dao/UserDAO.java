@@ -82,4 +82,46 @@ public class UserDAO {
             throw new RuntimeException(e);
         }
     }
+    public boolean checkPassword(int Id, String Password)
+    {
+        try {
+            Connection connection = ConnectDB.getConnection();
+            String sql = "SELECT * FROM account where id = ? and password = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, Id);
+            preparedStatement.setString(2, Password);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            String rsUsername = "";
+            while (resultSet.next()) {
+                rsUsername = resultSet.getString("username");
+            }
+
+            if (rsUsername.equals("")) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updatePassword(int Id, String Password)
+    {
+        try {
+            Connection connection = ConnectDB.getConnection();
+            String sql = "UPDATE account SET password = ?  WHERE id = ?  " ;
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, Password);
+            preparedStatement.setInt(2, Id);
+
+            int affectedRows = preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -17,4 +17,12 @@ public class UserBO {
     {
         return userDAO.isValid(Id,field,value);
     }
+    public Boolean checkPassword(int id, String password)
+    {
+        return userDAO.checkPassword(id ,password);
+    }
+    public void updatePassword(int id, String password)
+    {
+         userDAO.updatePassword(id ,password);
+    }
 }
