@@ -1,27 +1,27 @@
 <%@ page import="com.example.qcan.model.bean.Account" %><%--
   Created by IntelliJ IDEA.
   User: ADMIN
-  Date: 12/4/2023
-  Time: 10:10 PM
+  Date: 12/5/2023
+  Time: 10:03 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Profile</title>
+    <title>Title</title>
     <link rel="stylesheet" type="text/css" href="css/nologin.css">
     <link rel="stylesheet" type="text/css" href="css/header.css">
     <link rel="stylesheet" type="text/css" href="css/layout.css">
     <link rel="stylesheet" type="text/css" href="css/content.css">
     <link rel="stylesheet" type="text/css" href="css/editProfile.css">
     <link rel="stylesheet" type="text/css" href="css/profile.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link
             href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,700;1,100;1,300;1,400&display=swap"
             rel="stylesheet"
     />
-    <link rel="stylesheet" href="profile.css" />
+    <link rel="stylesheet" href="profile.css"/>
     <link
             href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
             rel="stylesheet"
@@ -30,11 +30,20 @@
 <body>
 
 <%
-    Account user = (Account) request.getAttribute("user");
+    Account user = (Account) request.getAttribute("userOther");
     session = request.getSession();
     Boolean isLogin = (Boolean) session.getAttribute("isLogin");
-    if (isLogin != null && isLogin == true && user!= null) {
+    if (isLogin != null && isLogin == true && user != null) {
+        if (user.getNickname() == null) {
 %>
+
+<div class="nologin">
+    <span class="nologin__title">oops!</span>
+    <span class="nologin__detail"> User invalid. Please try again! </span>
+
+</div>
+
+<% } else { %>
 
 <div class="container">
     <header class="header">
@@ -84,7 +93,7 @@
                 </div>
             </div>
             <div class="header__menu">
-                <input hidden id="header__menu--toggle" type="checkbox" />
+                <input hidden id="header__menu--toggle" type="checkbox"/>
                 <label class="header__menu--label" for="header__menu--toggle">
                     <i class="bx bx-menu-alt-right header__menu--button"></i>
                 </label>
@@ -110,7 +119,7 @@
                 </div>
             </div>
             <div class="user__bio">
-                <%if(user.getBio()!=null){%><%=user.getBio()%><%}%>
+                <%if (user.getBio() != null) {%><%=user.getBio()%><%}%>
             </div>
             <div class="user__social">
                 <div class="user__social--follow">
@@ -125,10 +134,14 @@
                 </div>
             </div>
             <div class="profile__edit">
-                <button class="profile__edit--button">
-                    <a style="color:black; text-decoration: none;" href="UserController?Action=Update">
-                        Chỉnh sửa trang cá nhân
+                <button style="cursor: pointer;color:white !important; background-color: black !important"
+                        class="profile__edit--button">
+                    <a style="color:white; text-decoration: none;" href="">
+                        Theo dõi
                     </a>
+                </button>
+                <button class="profile__edit--button">
+
 
                 </button>
             </div>
@@ -149,7 +162,6 @@
                             class="main__status--ava"
                             alt=""
                     />
-
                 </div>
 
                 <div class="main__status--content">
@@ -192,7 +204,9 @@
     </section>
 </div>
 
-
+<%
+    }
+%>
 
 
 <%

@@ -19,11 +19,26 @@ import java.io.IOException;
 public class UserController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String destination = null;
-
+        UserBO userBO = new UserBO();
         String Action = (String) request.getParameter("Action");
         if(Action ==null)
         {
-            destination = "/viewProfile.jsp";
+            HttpSession session = request.getSession();
+
+
+            int IdSession = (int)session.getAttribute("id");
+            String Id = (String) request.getParameter("Id");
+            if(Id==null ||  (Id!=null && Integer.parseInt(Id) == IdSession) )
+            {
+                destination = "/viewProfile.jsp";
+            }
+            else
+            {
+//                Account user = userBO.getAccount(username);
+                Account userOther = userBO.getUser(Integer.parseInt(Id));
+                request.setAttribute("userOther",userOther);
+                destination = "/viewProfileUserOther.jsp";
+            }
         }
         else if(Action.equals("Update"))
         {
@@ -34,7 +49,7 @@ public class UserController extends HttpServlet {
             destination = "/changePassword.jsp";
         }
 
-        UserBO userBO = new UserBO();
+
         HttpSession session = request.getSession();
         String username = (String)session.getAttribute("username");
         Account user = userBO.getAccount(username);
