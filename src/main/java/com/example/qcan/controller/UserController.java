@@ -1,7 +1,9 @@
 package com.example.qcan.controller;
 
 import com.example.qcan.model.bean.Account;
+import com.example.qcan.model.bean.Follow;
 import com.example.qcan.model.bo.CheckLoginBO;
+import com.example.qcan.model.bo.FollowBO;
 import com.example.qcan.model.bo.SignUpBO;
 import com.example.qcan.model.bo.UserBO;
 import com.mysql.cj.Session;
@@ -19,11 +21,45 @@ import java.io.IOException;
 public class UserController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String destination = null;
-
+        UserBO userBO = new UserBO();
+        FollowBO followBO = new FollowBO();
         String Action = (String) request.getParameter("Action");
         if(Action ==null)
         {
-            destination = "/viewProfile.jsp";
+            HttpSession session = request.getSession();
+
+
+            int IdSession = (int)session.getAttribute("id");
+            String Id = (String) request.getParameter("Id");
+
+
+            if(Id==null ||  (Id!=null && Integer.parseInt(Id) == IdSession) )
+            {
+
+                Follow countFl = followBO.countFollow(IdSession);
+                Follow countFler = followBO.countFollower(IdSession);
+
+                request.setAttribute("countFl",countFl);
+                request.setAttribute("countFler",countFler);
+
+                destination = "/viewProfile.jsp";
+            }
+            else
+            {
+//                Account user = userBO.getAccount(username);
+                Account userOther = userBO.getUser(Integer.parseInt(Id));
+
+                Follow countFl = followBO.countFollow(Integer.parseInt(Id));
+                Follow countFler = followBO.countFollower(Integer.parseInt(Id));
+
+                request.setAttribute("countFl",countFl);
+                request.setAttribute("countFler",countFler);
+                Follow isFl = followBO.checkFollow(IdSession,Integer.parseInt(Id));
+
+                request.setAttribute("isFl",isFl);
+                request.setAttribute("userOther",userOther);
+                destination = "/viewProfileUserOther.jsp";
+            }
         }
         else if(Action.equals("Update"))
         {
@@ -34,7 +70,7 @@ public class UserController extends HttpServlet {
             destination = "/changePassword.jsp";
         }
 
-        UserBO userBO = new UserBO();
+
         HttpSession session = request.getSession();
         String username = (String)session.getAttribute("username");
         Account user = userBO.getAccount(username);
