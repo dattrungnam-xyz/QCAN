@@ -39,7 +39,6 @@ public class CheckLoginController extends HttpServlet {
             session.setAttribute("username", user.getUsername());
 
 
-
             request.setAttribute("user",user);
             destination = "/index.jsp";
             RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
@@ -47,9 +46,10 @@ public class CheckLoginController extends HttpServlet {
         }
         else
         {
-            destination = "/login.jsp";
-            RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
-            rd.forward(request,response);
+            destination = "/CheckLoginController?error=Username or pasword is incorrect!";
+            response.sendRedirect(request.getContextPath() + destination);
+//            RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
+//            rd.forward(request,response);
         }
 
     }
