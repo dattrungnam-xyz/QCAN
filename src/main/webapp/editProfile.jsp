@@ -126,21 +126,21 @@
                     <span class="edit-profile__field"> Bio </span>
                     <div class="edit-profile__value">
                         <i class="bx bx-plus"></i>
-                        <input  onchange="handleChange()" name="bio" id="bio" value="<%=user.getBio()%>" class="edit-profile__value--input" type="text"/>
+                        <input  onchange="handleChange()" name="bio" id="bio" value="<%if(user.getBio()!=null){%><%=user.getBio()%><%}%>" class="edit-profile__value--input" type="text"/>
                     </div>
                 </div>
                 <div class="edit-profile__ele">
                     <span class="edit-profile__field"> Instagram </span>
                     <div class="edit-profile__value">
                         <i class="bx bx-plus"></i>
-                        <input onchange="handleChange()"  name="instagram" id="instagram" value="<%=user.getLinkIns()%>" class="edit-profile__value--input" type="text"/>
+                        <input onchange="handleChange()"  name="instagram" id="instagram" value="<%if(user.getLinkIns()!=null){%><%=user.getLinkIns()%><%}%>" class="edit-profile__value--input" type="text"/>
                     </div>
                 </div>
                 <div class="edit-profile__ele">
                     <span class="edit-profile__field"> Facebook </span>
                     <div class="edit-profile__value">
                         <i class="bx bx-plus"></i>
-                        <input  onchange="handleChange()"  name="facebook" id="facebook" value="<%=user.getLinkFB()%>" class="edit-profile__value--input" type="text"/>
+                        <input  onchange="handleChange()"  name="facebook" id="facebook" value="<%if(user.getLinkFB()!=null){%><%=user.getLinkFB()%><%}%>" class="edit-profile__value--input" type="text"/>
                     </div>
                 </div>
                 <label for="edit-profile__avatar--input" class="edit-profile__avatar-container">

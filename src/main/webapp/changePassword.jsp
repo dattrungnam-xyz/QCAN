@@ -109,8 +109,8 @@
                            name="newPassword" placeholder="New Password">
                     <input id="confirmPassword" class="login__input" onchange="handleChange()" type="password"
                            name="confirmPassword" placeholder="Confirm Password">
-                    <span class="login__error"> <% if(request.getParameter("error")!= null ){%><%=(String) request.getParameter("error")%><%}%> </span>
-                    <span style="color:#16a34a!important;" class="login__error"> <% if(request.getParameter("message")!= null ){%><%=(String) request.getParameter("message")%><%}%> </span>
+                    <span class="login__error error"> <% if(request.getParameter("error")!= null ){%><%=(String) request.getParameter("error")%><%}%> </span>
+                    <span style="color:#16a34a!important;" class="login__error success"> <% if(request.getParameter("message")!= null ){%><%=(String) request.getParameter("message")%><%}%> </span>
                     <button class="login__button">Update</button>
 
                 </form>
@@ -124,7 +124,8 @@
     let currentPassword = document.getElementById("currentPassword")
     let newPassword = document.getElementById("newPassword")
     let confirmPassword = document.getElementById("confirmPassword")
-    let error = document.querySelector(".login__error")
+    let error = document.querySelector(".error")
+    let success = document.querySelector(".success")
     function handleSubmit()
     {
         if(currentPassword.value =="" || newPassword.value==""|| confirmPassword.value =="")
@@ -147,6 +148,7 @@
     function handleChange()
     {
         error.innerHTML=""
+        success.innerHTML=""
     }
 </script>
 <%

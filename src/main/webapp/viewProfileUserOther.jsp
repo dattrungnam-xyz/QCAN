@@ -1,14 +1,17 @@
-<%@ page import="com.example.qcan.model.bean.Account" %><%--
+<%@ page import="com.example.qcan.model.bean.Account" %>
+<%@ page import="com.example.qcan.model.bean.Follow" %>
+<%@ page import="java.net.URLEncoder" %>
+<%--
   Created by IntelliJ IDEA.
   User: ADMIN
-  Date: 12/4/2023
-  Time: 10:10 PM
+  Date: 12/5/2023
+  Time: 10:03 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Profile</title>
+    <title>Title</title>
     <link rel="stylesheet" type="text/css" href="css/nologin.css">
     <link rel="stylesheet" type="text/css" href="css/header.css">
     <link rel="stylesheet" type="text/css" href="css/layout.css">
@@ -30,11 +33,21 @@
 <body>
 
 <%
-    Account user = (Account) request.getAttribute("user");
+    Account user = (Account) request.getAttribute("userOther");
+    Follow isFl = (Follow) request.getAttribute("isFl");
     session = request.getSession();
     Boolean isLogin = (Boolean) session.getAttribute("isLogin");
     if (isLogin != null && isLogin == true && user != null) {
+        if (user.getNickname() == null) {
 %>
+
+<div class="nologin">
+    <span class="nologin__title">oops!</span>
+    <span class="nologin__detail"> User invalid. Please try again! </span>
+
+</div>
+
+<% } else { %>
 
 <div class="container">
     <header class="header">
@@ -110,7 +123,7 @@
                 </div>
             </div>
             <div class="user__bio">
-                <%=user.getBio()%>
+                <%if (user.getBio() != null) {%><%=user.getBio()%><%}%>
             </div>
             <div class="user__social">
                 <div class="user__social--follow">
@@ -120,29 +133,35 @@
               </span>
                 </div>
                 <div class="user__social--link">
-                    <%
-                        if (!user.getLinkFB().equals("") && user.getLinkFB() != null) {
-                    %>
-                    <a href="<%=user.getLinkFB()%>"><i class="bx user__social--icon bxl-facebook"></i></a>
-                    <%
-                        }
-                    %>
-                    <%
-                        if (!user.getLinkIns().equals("") && user.getLinkIns() != null) {
-                    %>
                     <a href="<%=user.getLinkIns()%>"><i class="bx user__social--icon bxl-instagram"></i></a>
-                    <%
-                        }
-                    %>
+                    <a href="<%=user.getLinkFB()%>"><i class="bx user__social--icon bxl-facebook"></i></a>
                 </div>
             </div>
             <div class="profile__edit">
-                <button class="profile__edit--button">
-                    <a style="color:black; text-decoration: none;" href="UserController?Action=Update">
-                        Chỉnh sửa trang cá nhân
-                    </a>
+                <%
+
+                    // Set the current URL in the session
+                    session.setAttribute("currentUserView", user.getId());
+                %>
+                <%if(isFl.isFled() ==false){%>
+                <form method="post" action="FollowController?Action=Follow&Id=<%=user.getId()%>">
+                <button style="cursor: pointer;color:white !important; background-color: black !important"
+                        class="profile__edit--button">
+
+                        Theo dõi
 
                 </button>
+                </form>
+                <%} else {%>
+                <form method="post" action="FollowController?Action=Unfollow&Id=<%=user.getId()%>">
+                <button style="cursor: pointer;color:black !important; background-color: white !important"
+                        class="profile__edit--button">
+
+                        Bỏ theo dõi
+                </button>
+                </form>
+                <%}%>
+
             </div>
 
             <div class="profile__status">
@@ -161,7 +180,6 @@
                             class="main__status--ava"
                             alt=""
                     />
-
                 </div>
 
                 <div class="main__status--content">
@@ -203,6 +221,10 @@
         </div>
     </section>
 </div>
+
+<%
+    }
+%>
 
 
 <%

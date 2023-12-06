@@ -124,4 +124,33 @@ public class UserDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public Account getUser(int Id) {
+        try {
+            Connection connection = ConnectDB.getConnection();
+            String sql = "SELECT * FROM account where id = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, Id);
+
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            Account user = new Account();
+            while (resultSet.next()) {
+
+                user.setId(resultSet.getInt("id"));
+                user.setFullname(resultSet.getString("fullname"));
+                user.setNickname(resultSet.getString("nickname"));
+                user.setBio(resultSet.getString("bio"));
+                user.setAvatar(resultSet.getString("avatar"));
+
+                user.setLinkFB(resultSet.getString("linkfb"));
+                user.setLinkIns(resultSet.getString("linkins"));
+
+            }
+            return user;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

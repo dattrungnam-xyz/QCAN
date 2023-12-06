@@ -25,4 +25,8 @@ public class UserBO {
     {
          userDAO.updatePassword(id ,password);
     }
+    public Account getUser(int Id)
+    {
+        return this.userDAO.getUser(Id);
+    }
 }
