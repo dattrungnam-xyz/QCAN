@@ -5,6 +5,25 @@ public class Follow {
     private int IdFler;
     private int IdFLed;
     private boolean Fled;
+    private int countFollow;
+    private int countFollower;
+
+    public int getCountFollower() {
+        return countFollower;
+    }
+
+    public void setCountFollower(int countFollower) {
+        this.countFollower = countFollower;
+    }
+
+
+    public int getCountFollow() {
+        return countFollow;
+    }
+
+    public void setCountFollow(int countFollow) {
+        this.countFollow = countFollow;
+    }
 
     public void setFled(boolean fled) {
         Fled = fled;

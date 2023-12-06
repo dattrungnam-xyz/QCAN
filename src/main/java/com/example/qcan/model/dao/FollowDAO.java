@@ -70,4 +70,46 @@ public class FollowDAO {
 
         return fl;
     }
+    public Follow countFollow(int IdUser)
+    {
+        Follow fl = new Follow();
+        try {
+            Connection connection = ConnectDB.getConnection();
+            String sql = "SELECT count(*) as follow FROM follow where idFler = ? ";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setInt(1, IdUser);
+
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+               fl.setCountFollow(resultSet.getInt("follow"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return fl;
+    }
+    public Follow countFollower(int IdUser)
+    {
+        Follow fl = new Follow();
+        try {
+            Connection connection = ConnectDB.getConnection();
+            String sql = "SELECT count(*) as follower FROM follow where idFled = ? ";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setInt(1, IdUser);
+
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                fl.setCountFollower(resultSet.getInt("follower"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return fl;
+    }
 }

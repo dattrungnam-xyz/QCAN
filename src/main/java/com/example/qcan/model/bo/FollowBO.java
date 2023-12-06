@@ -16,4 +16,12 @@ public class FollowBO {
     {
         return followDAO.checkFollow(idFler,idFled);
     }
+    public Follow countFollow(int IdUser)
+    {
+        return followDAO.countFollow(IdUser);
+    }
+    public Follow countFollower(int IdUser)
+    {
+        return followDAO.countFollower(IdUser);
+    }
 }

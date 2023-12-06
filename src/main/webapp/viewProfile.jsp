@@ -1,4 +1,5 @@
-<%@ page import="com.example.qcan.model.bean.Account" %><%--
+<%@ page import="com.example.qcan.model.bean.Account" %>
+<%@ page import="com.example.qcan.model.bean.Follow" %><%--
   Created by IntelliJ IDEA.
   User: ADMIN
   Date: 12/4/2023
@@ -33,6 +34,9 @@
     Account user = (Account) request.getAttribute("user");
     session = request.getSession();
     Boolean isLogin = (Boolean) session.getAttribute("isLogin");
+    Follow countFl = (Follow) request.getAttribute("countFl");
+    Follow countFler = (Follow) request.getAttribute("countFler");
+
     if (isLogin != null && isLogin == true && user != null) {
 %>
 
@@ -114,9 +118,9 @@
             </div>
             <div class="user__social">
                 <div class="user__social--follow">
-                    <span class="user__social--follow-infor"> 2 người theo dõi </span>
+                    <span class="user__social--follow-infor"> <%=countFler.getCountFollower()%> người theo dõi </span>
                     <span class="user__social--follow-infor">
-                Đang theo dõi 2 người dùng
+                Đang theo dõi <%=countFl.getCountFollow()%> người dùng
               </span>
                 </div>
                 <div class="user__social--link">

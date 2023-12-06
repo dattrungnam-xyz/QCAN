@@ -35,6 +35,10 @@
 <%
     Account user = (Account) request.getAttribute("userOther");
     Follow isFl = (Follow) request.getAttribute("isFl");
+
+    Follow countFl = (Follow) request.getAttribute("countFl");
+    Follow countFler = (Follow) request.getAttribute("countFler");
+
     session = request.getSession();
     Boolean isLogin = (Boolean) session.getAttribute("isLogin");
     if (isLogin != null && isLogin == true && user != null) {
@@ -127,9 +131,9 @@
             </div>
             <div class="user__social">
                 <div class="user__social--follow">
-                    <span class="user__social--follow-infor"> 2 người theo dõi </span>
+                    <span class="user__social--follow-infor"><%=countFler.getCountFollower()%> người theo dõi </span>
                     <span class="user__social--follow-infor">
-                Đang theo dõi 2 người dùng
+                Đang theo dõi <%=countFl.getCountFollow()%> người dùng
               </span>
                 </div>
                 <div class="user__social--link">
