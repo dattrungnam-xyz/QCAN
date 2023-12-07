@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 @WebServlet("/UserController")
 public class UserController extends HttpServlet {
@@ -35,6 +36,25 @@ public class UserController extends HttpServlet {
 
             if(Id==null ||  (Id!=null && Integer.parseInt(Id) == IdSession) )
             {
+                ArrayList<Follow> listFled = new ArrayList<Follow>();
+                ArrayList<Follow> listFler = new ArrayList<Follow>();
+                ArrayList<Account> listAccFled = new ArrayList<Account>();
+                ArrayList<Account> listAccFler = new ArrayList<Account>();
+
+                listFled = followBO.listFollowed(IdSession);
+                for (Follow fl : listFled){
+                    Account userFled = new Account();
+                    userFled =userBO.getUser(fl.getIdFled());
+                    listAccFled.add(userFled);
+                }
+                listFler = followBO.listFollower(IdSession);
+                for (Follow fl : listFler){
+                    Account userFler = new Account();
+                    userFler =userBO.getUser(fl.getIdFler());
+                    listAccFler.add(userFler);
+                }
+                request.setAttribute("listAccFled",listAccFled);
+                request.setAttribute("listAccFler",listAccFler);
 
                 Follow countFl = followBO.countFollow(IdSession);
                 Follow countFler = followBO.countFollower(IdSession);
@@ -47,6 +67,29 @@ public class UserController extends HttpServlet {
             else
             {
 //                Account user = userBO.getAccount(username);
+
+
+                ArrayList<Follow> listFled = new ArrayList<Follow>();
+                ArrayList<Follow> listFler = new ArrayList<Follow>();
+                ArrayList<Account> listAccFled = new ArrayList<Account>();
+                ArrayList<Account> listAccFler = new ArrayList<Account>();
+
+                listFled = followBO.listFollowed(Integer.parseInt(Id));
+                for (Follow fl : listFled){
+                    Account userFled = new Account();
+                    userFled =userBO.getUser(fl.getIdFled());
+                    listAccFled.add(userFled);
+                }
+                listFler = followBO.listFollower(Integer.parseInt(Id));
+                for (Follow fl : listFler){
+                    Account userFler = new Account();
+                    userFler =userBO.getUser(fl.getIdFler());
+                    listAccFler.add(userFler);
+                }
+                request.setAttribute("listAccFled",listAccFled);
+                request.setAttribute("listAccFler",listAccFler);
+
+
                 Account userOther = userBO.getUser(Integer.parseInt(Id));
 
                 Follow countFl = followBO.countFollow(Integer.parseInt(Id));
@@ -54,6 +97,7 @@ public class UserController extends HttpServlet {
 
                 request.setAttribute("countFl",countFl);
                 request.setAttribute("countFler",countFler);
+
                 Follow isFl = followBO.checkFollow(IdSession,Integer.parseInt(Id));
 
                 request.setAttribute("isFl",isFl);

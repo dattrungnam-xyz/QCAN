@@ -1,6 +1,7 @@
 <%@ page import="com.example.qcan.model.bean.Account" %>
 <%@ page import="com.example.qcan.model.bean.Follow" %>
 <%@ page import="java.net.URLEncoder" %>
+<%@ page import="java.util.ArrayList" %>
 <%--
   Created by IntelliJ IDEA.
   User: ADMIN
@@ -18,6 +19,7 @@
     <link rel="stylesheet" type="text/css" href="css/content.css">
     <link rel="stylesheet" type="text/css" href="css/editProfile.css">
     <link rel="stylesheet" type="text/css" href="css/profile.css">
+    <link rel="stylesheet" type="text/css" href="css/modal.css">
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link
@@ -38,6 +40,9 @@
 
     Follow countFl = (Follow) request.getAttribute("countFl");
     Follow countFler = (Follow) request.getAttribute("countFler");
+
+    ArrayList<Account> listAccFler = (ArrayList<Account>) request.getAttribute("listAccFler");
+    ArrayList<Account> listAccFled = (ArrayList<Account>) request.getAttribute("listAccFled");
 
     session = request.getSession();
     Boolean isLogin = (Boolean) session.getAttribute("isLogin");
@@ -131,8 +136,8 @@
             </div>
             <div class="user__social">
                 <div class="user__social--follow">
-                    <span class="user__social--follow-infor"><%=countFler.getCountFollower()%> người theo dõi </span>
-                    <span class="user__social--follow-infor">
+                    <span style="cursor: pointer" onclick="toggleFollower()" class="user__social--follow-infor"><%=countFler.getCountFollower()%> người theo dõi </span>
+                    <span style="cursor: pointer" onclick="toggleFollowed()"  class="user__social--follow-infor">
                 Đang theo dõi <%=countFl.getCountFollow()%> người dùng
               </span>
                 </div>
@@ -225,6 +230,74 @@
         </div>
     </section>
 </div>
+
+<div onclick="toggleFollowed()" class="modal modal1 hidden"></div>
+<div class="fled followed-content hidden">
+    <div class="followed-header">
+        <span>Đang theo dõi</span>
+        <div onclick="
+        toggleFollowed()" class="followed-header__close">
+            <i class="bx bx-x followed-header__close--icon"></i>
+        </div>
+    </div>
+    <div class="followed-list-user">
+        <% for (Account fl : listAccFled) { %>
+        <div class="followed-user">
+            <div class="followed-user__avatar">
+                <img src="<%=fl.getAvatar()%>" alt="">
+            </div>
+            <div class="followed-user__infor">
+                <span style="font-size:14px;font-weight: bold;"><%=fl.getFullname()%></span>
+                <span style="font-size:13px;font-weight: bold; color:#737373"><%=fl.getNickname()%></span>
+            </div>
+        </div>
+        <%}%>
+
+    </div>
+</div>
+
+<div onclick="toggleFollower()" class="modal modal2 hidden"></div>
+<div class="fler followed-content hidden">
+    <div class="followed-header">
+        <span>Người theo dõi</span>
+        <div onclick="
+        toggleFollower()" class="followed-header__close">
+            <i class="bx bx-x followed-header__close--icon"></i>
+        </div>
+    </div>
+    <div class="followed-list-user">
+        <% for (Account fl : listAccFler) { %>
+        <div class="followed-user">
+            <div class="followed-user__avatar">
+                <img src="<%=fl.getAvatar()%>" alt="">
+            </div>
+            <div class="followed-user__infor">
+                <span style="font-size:14px;font-weight: bold;"><%=fl.getFullname()%></span>
+                <span style="font-size:13px;font-weight: bold; color:#737373"><%=fl.getNickname()%></span>
+            </div>
+        </div>
+        <%}%>
+
+    </div>
+</div>
+<script>
+
+    function toggleFollowed() {
+        let modal = document.querySelector(".modal1")
+        let content = document.querySelector(".fled")
+
+        modal.classList.toggle("hidden")
+        content.classList.toggle("hidden")
+    }
+
+    function toggleFollower() {
+        let modal = document.querySelector(".modal2")
+        let content = document.querySelector(".fler")
+
+        modal.classList.toggle("hidden")
+        content.classList.toggle("hidden")
+    }
+</script>
 
 <%
     }

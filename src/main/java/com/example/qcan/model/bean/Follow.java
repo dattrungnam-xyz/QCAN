@@ -3,7 +3,7 @@ package com.example.qcan.model.bean;
 public class Follow {
     private int IdFl;
     private int IdFler;
-    private int IdFLed;
+    private int IdFled;
     private boolean Fled;
     private int countFollow;
     private int countFollower;
@@ -37,8 +37,8 @@ public class Follow {
         return IdFl;
     }
 
-    public int getIdFLed() {
-        return IdFLed;
+    public int getIdFled() {
+        return IdFled;
     }
 
     public int getIdFler() {
@@ -49,8 +49,8 @@ public class Follow {
         IdFl = idFl;
     }
 
-    public void setIdFLed(int idFLed) {
-        IdFLed = idFLed;
+    public void setIdFled(int idFLed) {
+        IdFled = idFLed;
     }
 
     public void setIdFler(int idFler) {
