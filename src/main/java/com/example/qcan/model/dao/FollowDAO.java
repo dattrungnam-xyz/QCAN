@@ -107,9 +107,7 @@ public class FollowDAO {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                System.out.println(resultSet.getInt("idFled"));
-                fl.setIdFLed(resultSet.getInt("idFled"));
-                //fl.setCountFollower(resultSet.getInt("follower"));
+                fl.setIdFled(resultSet.getInt("idFled"));
                 listfl.add(fl);
             }
         } catch (SQLException e) {
@@ -119,7 +117,7 @@ public class FollowDAO {
     }
 
     public ArrayList<Follow> getFollower(int IdUser){
-        //Follow fl = new Follow();
+
         ArrayList<Follow> listfl = new ArrayList<Follow>();
         try {
             Connection connection = ConnectDB.getConnection();
@@ -133,9 +131,7 @@ public class FollowDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Follow fl = new Follow();
-                System.out.println(resultSet.getInt("idFler"));
                 fl.setIdFler(resultSet.getInt("idFler"));
-                //fl.setCountFollower(resultSet.getInt("follower"));
                 listfl.add(fl);
             }
         } catch (SQLException e) {

@@ -40,13 +40,13 @@ public class CheckLoginController extends HttpServlet {
 
 
             request.setAttribute("user",user);
-            destination = "/index.jsp";
+            destination = "/indexTemp.jsp";
             RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
             rd.forward(request,response);
         }
         else
         {
-            destination = "/CheckLoginController?error=Username or pasword is incorrect!";
+            destination = "/CheckLoginController?error=Username or password is incorrect!";
             response.sendRedirect(request.getContextPath() + destination);
 //            RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
 //            rd.forward(request,response);

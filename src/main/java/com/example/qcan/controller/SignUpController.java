@@ -80,7 +80,7 @@ public class SignUpController extends HttpServlet {
 //
 //
 //            request.setAttribute("user",user);
-//            destination = "/index.jsp";
+//            destination = "/indexTemp.jsp";
 //            RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
 //            rd.forward(request,response);
 //        }
