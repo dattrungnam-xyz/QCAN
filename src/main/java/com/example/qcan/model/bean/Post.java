@@ -13,6 +13,11 @@ public class Post {
     private String PostContent;
     private String VideoUrl;
 
+    private String Fullname;
+    private String Nickname;
+    private String Avatar;
+
+
     public int getIdPost() {
         return IdPost;
     }
@@ -77,4 +82,29 @@ public class Post {
     public void setVideoUrl(String videoUrl) {
         VideoUrl = videoUrl;
     }
+
+    public void setNickname(String nickname) {
+        Nickname = nickname;
+    }
+
+    public void setAvatar(String avatar) {
+        Avatar = avatar;
+    }
+
+    public String getNickname() {
+        return Nickname;
+    }
+
+    public String getAvatar() {
+        return Avatar;
+    }
+
+    public void setFullname(String fullname) {
+        Fullname = fullname;
+    }
+
+    public String getFullname() {
+        return Fullname;
+    }
+
 }

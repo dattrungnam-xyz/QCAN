@@ -9,4 +9,16 @@ public class PostBO {
     {
          postDAO.createPost(post);
     }
+    public void updatePost(Post post)
+    {
+        postDAO.updatePost(post);
+    }
+    public Post getPostByIdPost(int idPost)
+    {
+        return postDAO.getPostByIdPost(idPost);
+    }
+    public boolean checkPermissionUpdate(int IdPost,int IdUser)
+    {
+        return postDAO.checkPermissionUpdate(IdPost,IdUser);
+    }
 }

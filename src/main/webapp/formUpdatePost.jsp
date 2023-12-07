@@ -1,8 +1,9 @@
-<%@ page import="com.example.qcan.model.bean.Account" %><%--
+<%@ page import="com.example.qcan.model.bean.Account" %>
+<%@ page import="com.example.qcan.model.bean.Post" %><%--
   Created by IntelliJ IDEA.
   User: ADMIN
-  Date: 12/6/2023
-  Time: 7:07 PM
+  Date: 12/7/2023
+  Time: 2:14 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -36,6 +37,7 @@
 
 <%
     Account user = (Account) request.getAttribute("user");
+    Post post = (Post) request.getAttribute("post");
     session = request.getSession();
     Boolean isLogin = (Boolean) session.getAttribute("isLogin");
     if (isLogin != null && isLogin == true && user != null) {
@@ -99,9 +101,10 @@
         </div>
     </header>
     <section class="main">
-        <form   class="edit-profile__container post__status--form" onsubmit="return handleSubmit()" method="post"  action="PostController?Action=Create" enctype="multipart/form-data"
-                 >
-            <h1 style="font-family:sans-serif; text-transform: uppercase; font-size: 20px; font-weight: bold">Create Post</h1>
+
+        <form   class="edit-profile__container post__status--form" onsubmit="return handleSubmit()" method="post"  action="PostController?Action=Update&IdPost=<%=post.getIdPost()%>" enctype="multipart/form-data"
+        >
+            <h1 style="font-family:sans-serif; text-transform: uppercase; font-size: 20px; font-weight: bold">Update Post</h1>
             <div class="post__status--container">
                 <div class="post__status--container-left">
                     <div class="edit-profile__ele">
@@ -114,6 +117,7 @@
                                     id="songName"
                                     name="songName"
                                     onchange="handleChange()"
+                                    value="<% if(post.getSongName()!= null ){%><%=post.getSongName()%><%}%>"
                             />
                         </div>
                     </div>
@@ -121,14 +125,27 @@
                         <span class="edit-profile__field"> Song Type </span>
                         <div class="edit-profile__value">
                             <i class="bx bx-plus"></i>
-                            <input class="edit-profile__value--input" id="songType" name="songType" onchange="handleChange()" type="text"/>
+                            <input class="edit-profile__value--input"
+                                   id="songType"
+                                   name="songType"
+                                   onchange="handleChange()"
+                                   type="text"
+                                   value="<% if(post.getSongType()!= null ){%><%=post.getSongType()%><%}%>"
+                            />
                         </div>
                     </div>
                     <div class="edit-profile__ele">
                         <span class="edit-profile__field">Musician</span>
                         <div class="edit-profile__value">
                             <i class="bx bx-plus"></i>
-                            <input name="musician" id="musician" class="edit-profile__value--input" onchange="handleChange()" type="text"/>
+                            <input
+                                    name="musician"
+                                    id="musician"
+                                    class="edit-profile__value--input"
+                                    onchange="handleChange()"
+                                    type="text"
+                                    value="<% if(post.getMusician()!= null ){%><%=post.getMusician()%><%}%>"
+                            />
                         </div>
                     </div>
                     <div class="edit-profile__ele">
@@ -144,8 +161,9 @@
                                     rows="7"
                                     class="edit-profile__value--input"
                                     type="text"
+
                                     onchange="handleChange()"
-                            ></textarea>
+                            ><% if(post.getPostContent()!= null ){%><%=post.getPostContent()%><%}%></textarea>
                         </div>
                     </div>
                 </div>
@@ -168,7 +186,7 @@
                     <div class="edit-profile__ele">
                         <span class="edit-profile__field"> Preview video </span>
                         <div class="edit-profile__value">
-                            <video style="width: 100%" id="displayVideo" controls></video>
+                            <video src="<% if(post.getVideoUrl()!= null ){%><%=post.getVideoUrl()%><%}%>" style="width: 100%" id="displayVideo" controls></video>
                         </div>
                     </div>
                 </div>
@@ -181,7 +199,7 @@
                 <p class="edit-profile__success"> <% if(request.getParameter("message")!= null ){%><%=(String) request.getParameter("message")%><%}%> </p>
             </div>
             <div>
-                <button class="edit-profile__button">post</button>
+                <button class="edit-profile__button">Update</button>
             </div>
         </form>
     </section>
@@ -189,38 +207,38 @@
 <script>
 
 
-<%-- async   function uploadVideoToCloudinary(videoFile) {--%>
-<%--        const cloudName  = 'drao7atge';--%>
-<%--        const uploadPreset  = 'vdmxwrl2';--%>
-<%--        const apiKey  = '843756788835187';--%>
-<%--     const cloudinaryURL = `https://api.cloudinary.com/v1_1/${cloudName}/video/upload`;--%>
-<%--        try {--%>
-<%--            const formData = new FormData();--%>
-<%--            formData.append('file', videoFile);--%>
-<%--            formData.append('upload_preset', uploadPreset);--%>
+    <%-- async   function uploadVideoToCloudinary(videoFile) {--%>
+    <%--        const cloudName  = 'drao7atge';--%>
+    <%--        const uploadPreset  = 'vdmxwrl2';--%>
+    <%--        const apiKey  = '843756788835187';--%>
+    <%--     const cloudinaryURL = `https://api.cloudinary.com/v1_1/${cloudName}/video/upload`;--%>
+    <%--        try {--%>
+    <%--            const formData = new FormData();--%>
+    <%--            formData.append('file', videoFile);--%>
+    <%--            formData.append('upload_preset', uploadPreset);--%>
 
-<%--            const response = await fetch(cloudinaryURL, {--%>
-<%--                method: 'POST',--%>
-<%--                body: formData,--%>
-<%--                headers: {--%>
-<%--                    'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8',--%>
+    <%--            const response = await fetch(cloudinaryURL, {--%>
+    <%--                method: 'POST',--%>
+    <%--                body: formData,--%>
+    <%--                headers: {--%>
+    <%--                    'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8',--%>
 
-<%--                    Authorization: 'Basic ' + btoa(apiKey + ':' + "sxKBzMn11B_lOGWdPNe1qE45CN4"),--%>
-<%--                },--%>
-<%--            });--%>
+    <%--                    Authorization: 'Basic ' + btoa(apiKey + ':' + "sxKBzMn11B_lOGWdPNe1qE45CN4"),--%>
+    <%--                },--%>
+    <%--            });--%>
 
-<%--            const responseData = await response.json();--%>
+    <%--            const responseData = await response.json();--%>
 
-<%--            if (responseData.secure_url) {--%>
-<%--                return responseData.secure_url;--%>
-<%--            } else {--%>
-<%--                throw new Error('Upload failed');--%>
-<%--            }--%>
-<%--        } catch (error) {--%>
-<%--            console.error('Error uploading video to Cloudinary:', error.message);--%>
-<%--            throw error;--%>
-<%--        }--%>
-<%--    }--%>
+    <%--            if (responseData.secure_url) {--%>
+    <%--                return responseData.secure_url;--%>
+    <%--            } else {--%>
+    <%--                throw new Error('Upload failed');--%>
+    <%--            }--%>
+    <%--        } catch (error) {--%>
+    <%--            console.error('Error uploading video to Cloudinary:', error.message);--%>
+    <%--            throw error;--%>
+    <%--        }--%>
+    <%--    }--%>
 
 
     async function convertAndDisplayVideo() {
@@ -279,7 +297,7 @@
 
 
 
-     function  handleSubmit() {
+    function  handleSubmit() {
         let songName = document.getElementById("songName")
         let songType = document.getElementById("songType")
         let musician = document.getElementById("musician")
