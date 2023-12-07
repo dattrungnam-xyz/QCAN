@@ -1,45 +1,33 @@
-<%@ page import="com.example.qcan.model.bean.Account" %>
-<%@ page import="com.example.qcan.model.bean.Follow" %><%--
+<%--
   Created by IntelliJ IDEA.
-  User: ADMIN
-  Date: 12/4/2023
-  Time: 10:10 PM
+  User: Admin
+  Date: 6/12/2023
+  Time: 12:31 AM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Profile</title>
-    <link rel="stylesheet" type="text/css" href="css/nologin.css">
-    <link rel="stylesheet" type="text/css" href="css/header.css">
-    <link rel="stylesheet" type="text/css" href="css/layout.css">
-    <link rel="stylesheet" type="text/css" href="css/content.css">
-    <link rel="stylesheet" type="text/css" href="css/editProfile.css">
-    <link rel="stylesheet" type="text/css" href="css/profile.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="header.css" />
+    <link rel="stylesheet" href="layout.css" />
+    <link rel="stylesheet" href="content.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
             href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,700;1,100;1,300;1,400&display=swap"
             rel="stylesheet"
     />
-    <link rel="stylesheet" href="profile.css"/>
+    <link rel="stylesheet" href="profile.css" />
     <link
             href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
             rel="stylesheet"
     />
+    <title>Document</title>
 </head>
 <body>
-
-<%
-    Account user = (Account) request.getAttribute("user");
-    session = request.getSession();
-    Boolean isLogin = (Boolean) session.getAttribute("isLogin");
-    Follow countFl = (Follow) request.getAttribute("countFl");
-    Follow countFler = (Follow) request.getAttribute("countFler");
-
-    if (isLogin != null && isLogin == true && user != null) {
-%>
-
 <div class="container">
     <header class="header">
         <div class="header__container">
@@ -88,7 +76,7 @@
                 </div>
             </div>
             <div class="header__menu">
-                <input hidden id="header__menu--toggle" type="checkbox"/>
+                <input hidden id="header__menu--toggle" type="checkbox" />
                 <label class="header__menu--label" for="header__menu--toggle">
                     <i class="bx bx-menu-alt-right header__menu--button"></i>
                 </label>
@@ -102,50 +90,36 @@
         <div class="main__content">
             <div class="user__infor">
                 <div class="user__infor--account">
-                    <span class="user__name"> <%=user.getFullname()%></span>
-                    <span class="user__username"> @<%=user.getNickname()%></span>
+                    <span class="user__name"> Dat </span>
+                    <span class="user__username"> _dat.trung.nam_ </span>
                 </div>
                 <div class="user__avatar">
                     <img
                             class="user__avatar--image"
-                            src="<%if(user.getAvatar()!=null){%><%=user.getAvatar().replace(' ','+')%><%}%>"
+                            src="https://vtv1.mediacdn.vn/zoom/640_400/2022/3/4/avatar-jake-neytiri-pandora-ocean-1646372078251163431014-crop-16463720830272075805905.jpg"
                             alt=""
                     />
                 </div>
             </div>
             <div class="user__bio">
-                <%=user.getBio()%>
+                Đây là tiểu sử
+                đạt ở trung nam
             </div>
             <div class="user__social">
                 <div class="user__social--follow">
-                    <span class="user__social--follow-infor"> <%=countFler.getCountFollower()%> người theo dõi </span>
+                    <span class="user__social--follow-infor"> 2 người theo dõi </span>
                     <span class="user__social--follow-infor">
-                <label onclick="openFollowersPopup(1)">Đang theo dõi <%=countFl.getCountFollow()%> người dùng</label>
+                Đang theo dõi 2 người dùng
               </span>
                 </div>
                 <div class="user__social--link">
-                    <%
-                        if (!user.getLinkFB().equals("") && user.getLinkFB() != null) {
-                            %>
-                            <a href="<%=user.getLinkFB()%>"><i class="bx user__social--icon bxl-facebook"></i></a>
-                            <%
-                        }
-                    %>
-                    <%
-                        if (!user.getLinkIns().equals("") && user.getLinkIns() != null) {
-                            %>
-                            <a href="<%=user.getLinkIns()%>"><i class="bx user__social--icon bxl-instagram"></i></a>
-                            <%
-                        }
-                    %>
+                    <a href=""><i class="bx user__social--icon bxl-instagram"></i></a>
+                    <a href=""><i class="bx user__social--icon bxl-facebook"></i></a>
                 </div>
             </div>
             <div class="profile__edit">
                 <button class="profile__edit--button">
-                    <a style="color:black; text-decoration: none;" href="UserController?Action=Update">
-                        Chỉnh sửa trang cá nhân
-                    </a>
-
+                    Chỉnh sửa trang cá nhân
                 </button>
             </div>
 
@@ -161,11 +135,11 @@
                 <div class="main__status--ava-contain">
                     <img
                             class="main__post--avatar"
-                            src="<%if(user.getAvatar()!=null){%><%=user.getAvatar().replace(' ','+')%><%}%>"
+                            src=" https://vtv1.mediacdn.vn/zoom/640_400/2022/3/4/avatar-jake-neytiri-pandora-ocean-1646372078251163431014-crop-16463720830272075805905.jpg"
                             class="main__status--ava"
                             alt=""
                     />
-
+                    <span class="main__status--button-follow">+</span>
                 </div>
 
                 <div class="main__status--content">
@@ -207,40 +181,6 @@
         </div>
     </section>
 </div>
-
-
-<%
-} else {
-%>
-
-
-<div class="nologin">
-    <span class="nologin__title">oops!</span>
-    <span class="nologin__detail"> You are not logged in. Please log in and try again! </span>
-    <a class="nologin__button" href="CheckLoginController">Login</a>
-</div>
-<%
-    }
-%>
-
 </body>
-
-<script>
-    // Function to open the followers popup
-    function openFollowersPopup(userId) {
-        $.ajax({
-            url: 'listFL.jsp',
-            type: 'GET',
-            data: { userId: userId },
-            success: function(response) {
-                // Open a popup and inject the response HTML
-                var popup = window.open('listFL.jsp', '_blank', 'width=400, height=400');
-                popup.document.write(response);
-            },
-            error: function(error) {
-                console.log('Error fetching followers: ', error);
-            }
-        });
-    }
-</script>
 </html>
+

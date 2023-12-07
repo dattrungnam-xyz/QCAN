@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class FollowDAO {
     public void follow(int IdFler, int IdFled)
@@ -84,12 +85,63 @@ public class FollowDAO {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
+                //fl.setIdFLed(resultSet.getInt("idFled"));
                fl.setCountFollow(resultSet.getInt("follow"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return fl;
+    }
+    public ArrayList<Follow> getFollowed(int IdUser){
+        Follow fl = new Follow();
+        ArrayList<Follow> listfl = new ArrayList<Follow>();
+        try {
+            Connection connection = ConnectDB.getConnection();
+            String sql = "SELECT * FROM follow where idFler = ? ";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setInt(1, IdUser);
+
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                System.out.println(resultSet.getInt("idFled"));
+                fl.setIdFLed(resultSet.getInt("idFled"));
+                //fl.setCountFollower(resultSet.getInt("follower"));
+                listfl.add(fl);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listfl;
+    }
+
+    public ArrayList<Follow> getFollower(int IdUser){
+        //Follow fl = new Follow();
+        ArrayList<Follow> listfl = new ArrayList<Follow>();
+        try {
+            Connection connection = ConnectDB.getConnection();
+            String sql = "SELECT * FROM follow where idFled = ? ";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setInt(1, IdUser);
+
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Follow fl = new Follow();
+                System.out.println(resultSet.getInt("idFler"));
+                fl.setIdFler(resultSet.getInt("idFler"));
+                //fl.setCountFollower(resultSet.getInt("follower"));
+                listfl.add(fl);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listfl;
     }
     public Follow countFollower(int IdUser)
     {
@@ -105,6 +157,7 @@ public class FollowDAO {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
+                //fl.setIdFler(resultSet.getInt("idFler"));
                 fl.setCountFollower(resultSet.getInt("follower"));
             }
         } catch (SQLException e) {

@@ -27,6 +27,6 @@ public class UserBO {
     }
     public Account getUser(int Id)
     {
-        return this.userDAO.getUser(Id);
+        return userDAO.getUserByID(Id);
     }
 }
