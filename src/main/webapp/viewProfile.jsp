@@ -120,22 +120,22 @@
                 <div class="user__social--follow">
                     <span class="user__social--follow-infor"> <%=countFler.getCountFollower()%> người theo dõi </span>
                     <span class="user__social--follow-infor">
-                Đang theo dõi <%=countFl.getCountFollow()%> người dùng
+                <label onclick="openFollowersPopup(1)">Đang theo dõi <%=countFl.getCountFollow()%> người dùng</label>
               </span>
                 </div>
                 <div class="user__social--link">
                     <%
                         if (!user.getLinkFB().equals("") && user.getLinkFB() != null) {
-                    %>
-                    <a href="<%=user.getLinkFB()%>"><i class="bx user__social--icon bxl-facebook"></i></a>
-                    <%
+                            %>
+                            <a href="<%=user.getLinkFB()%>"><i class="bx user__social--icon bxl-facebook"></i></a>
+                            <%
                         }
                     %>
                     <%
                         if (!user.getLinkIns().equals("") && user.getLinkIns() != null) {
-                    %>
-                    <a href="<%=user.getLinkIns()%>"><i class="bx user__social--icon bxl-instagram"></i></a>
-                    <%
+                            %>
+                            <a href="<%=user.getLinkIns()%>"><i class="bx user__social--icon bxl-instagram"></i></a>
+                            <%
                         }
                     %>
                 </div>
@@ -224,4 +224,23 @@
 %>
 
 </body>
+
+<script>
+    // Function to open the followers popup
+    function openFollowersPopup(userId) {
+        $.ajax({
+            url: 'listFL.jsp',
+            type: 'GET',
+            data: { userId: userId },
+            success: function(response) {
+                // Open a popup and inject the response HTML
+                var popup = window.open('listFL.jsp', '_blank', 'width=400, height=400');
+                popup.document.write(response);
+            },
+            error: function(error) {
+                console.log('Error fetching followers: ', error);
+            }
+        });
+    }
+</script>
 </html>

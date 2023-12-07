@@ -60,6 +60,36 @@ public class UserDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public Account getAccountById(int id){
+        Connection connection = null;
+        try {
+            connection = ConnectDB.getConnection();
+            String sql = "SELECT * FROM account where id = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            Account user = new Account();
+            while (resultSet.next()) {
+                user.setUsername(resultSet.getString("username"));
+                user.setId(resultSet.getInt("id"));
+                user.setFullname(resultSet.getString("fullname"));
+                user.setNickname(resultSet.getString("nickname"));
+                user.setBio(resultSet.getString("bio"));
+                user.setAvatar(resultSet.getString("avatar"));
+                user.setRole(resultSet.getString("role"));
+                user.setLinkFB(resultSet.getString("linkfb"));
+                user.setLinkIns(resultSet.getString("linkins"));
+                user.setEmail(resultSet.getString("email"));
+            }
+            return user;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
     public void updateUser(Account user)
     {
         try {
@@ -125,7 +155,7 @@ public class UserDAO {
         }
     }
 
-    public Account getUser(int Id) {
+    public Account getUserByID(int Id) {
         try {
             Connection connection = ConnectDB.getConnection();
             String sql = "SELECT * FROM account where id = ?";
@@ -139,6 +169,7 @@ public class UserDAO {
             while (resultSet.next()) {
 
                 user.setId(resultSet.getInt("id"));
+
                 user.setFullname(resultSet.getString("fullname"));
                 user.setNickname(resultSet.getString("nickname"));
                 user.setBio(resultSet.getString("bio"));
