@@ -16,8 +16,10 @@ public class LogOutController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        session.setAttribute("isLogin", false);
-        session.invalidate();
+        session.removeAttribute("isLogin");
+        session.removeAttribute("id");
+        session.removeAttribute("username");
+
 
         String destination = "/login.jsp";
         RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);

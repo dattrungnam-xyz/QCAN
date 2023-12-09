@@ -2,10 +2,8 @@ package com.example.qcan.controller;
 
 import com.example.qcan.model.bean.Account;
 import com.example.qcan.model.bean.Follow;
-import com.example.qcan.model.bo.CheckLoginBO;
-import com.example.qcan.model.bo.FollowBO;
-import com.example.qcan.model.bo.SignUpBO;
-import com.example.qcan.model.bo.UserBO;
+import com.example.qcan.model.bean.Post;
+import com.example.qcan.model.bo.*;
 import com.mysql.cj.Session;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -16,31 +14,98 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 @WebServlet("/UserController")
 public class UserController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String destination = null;
         UserBO userBO = new UserBO();
+        PostBO postBO = new PostBO();
+        FollowBO followBO = new FollowBO();
         String Action = (String) request.getParameter("Action");
         if(Action ==null)
         {
             HttpSession session = request.getSession();
 
+            int IdSession =0;
 
-            int IdSession = (int)session.getAttribute("id");
+            if(session.getAttribute("id")!=null)
+            {IdSession= (int)session.getAttribute("id");}
             String Id = (String) request.getParameter("Id");
+
+
             if(Id==null ||  (Id!=null && Integer.parseInt(Id) == IdSession) )
             {
+                ArrayList<Follow> listFled = new ArrayList<Follow>();
+                ArrayList<Follow> listFler = new ArrayList<Follow>();
+                ArrayList<Account> listAccFled = new ArrayList<Account>();
+                ArrayList<Account> listAccFler = new ArrayList<Account>();
+
+                ArrayList<Post> listPost =  postBO.getPostByIdUser(IdSession);
+                request.setAttribute("listPost",listPost);
+
+                listFled = followBO.listFollowed(IdSession);
+                for (Follow fl : listFled){
+                    Account userFled = new Account();
+                    userFled =userBO.getUser(fl.getIdFled());
+                    listAccFled.add(userFled);
+                }
+                listFler = followBO.listFollower(IdSession);
+                for (Follow fl : listFler){
+                    Account userFler = new Account();
+                    userFler =userBO.getUser(fl.getIdFler());
+                    listAccFler.add(userFler);
+                }
+                request.setAttribute("listAccFled",listAccFled);
+                request.setAttribute("listAccFler",listAccFler);
+
+                Follow countFl = followBO.countFollow(IdSession);
+                Follow countFler = followBO.countFollower(IdSession);
+
+                request.setAttribute("countFl",countFl);
+                request.setAttribute("countFler",countFler);
+
                 destination = "/viewProfile.jsp";
             }
             else
             {
 //                Account user = userBO.getAccount(username);
+
+
+                ArrayList<Follow> listFled = new ArrayList<Follow>();
+                ArrayList<Follow> listFler = new ArrayList<Follow>();
+                ArrayList<Account> listAccFled = new ArrayList<Account>();
+                ArrayList<Account> listAccFler = new ArrayList<Account>();
+
+                listFled = followBO.listFollowed(Integer.parseInt(Id));
+                for (Follow fl : listFled){
+                    Account userFled = new Account();
+                    userFled =userBO.getUser(fl.getIdFled());
+                    listAccFled.add(userFled);
+                }
+                listFler = followBO.listFollower(Integer.parseInt(Id));
+                for (Follow fl : listFler){
+                    Account userFler = new Account();
+                    userFler =userBO.getUser(fl.getIdFler());
+                    listAccFler.add(userFler);
+                }
+                request.setAttribute("listAccFled",listAccFled);
+                request.setAttribute("listAccFler",listAccFler);
+
+
                 Account userOther = userBO.getUser(Integer.parseInt(Id));
-                FollowBO followBO = new FollowBO();
+
+                Follow countFl = followBO.countFollow(Integer.parseInt(Id));
+                Follow countFler = followBO.countFollower(Integer.parseInt(Id));
+
+                request.setAttribute("countFl",countFl);
+                request.setAttribute("countFler",countFler);
 
                 Follow isFl = followBO.checkFollow(IdSession,Integer.parseInt(Id));
+
+                ArrayList<Post> listPost =  postBO.getPostByIdUser(Integer.parseInt(Id));
+                request.setAttribute("listPost",listPost);
 
                 request.setAttribute("isFl",isFl);
                 request.setAttribute("userOther",userOther);

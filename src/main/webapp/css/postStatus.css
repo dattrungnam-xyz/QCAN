@@ -1,0 +1,24 @@
+.post__status--form {
+    width: 100% !important;
+    height: 100% !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.post__status--container {
+    display: flex;
+    gap: 160px;
+    padding: 20px;
+    width:100%;
+}
+
+.post__status--container-right, .post__status--container-left{
+    flex:1;
+}
+
+.edit-profile__success
+{
+    color: #16a34a;
+    margin-bottom:16px;
+}

@@ -34,8 +34,16 @@
             </span>
         <input id="username" class="login__input" onchange="handleChange()" type="text" name="username" placeholder="Username">
         <input id="password" class="login__input" onchange="handleChange()" type="password" name="password" placeholder="Password">
-        <span class="login__error"> </span>
+<%--        <span class="login__error"> </span>--%>
+        <span class="login__error"> <% if(request.getParameter("error")!= null ){%><%=(String) request.getParameter("error")%><%}%> </span>
+<%--        <%--%>
+<%--            if (session.getAttribute("warning")!=null){--%>
+<%--        %>--%>
+<%--        <label style="color: red; text-align: center; margin-bottom: 5px;">Yêu cầu nhập đúng thông tin</label>--%>
+<%--        <%}--%>
+<%--        %>--%>
         <button class="login__button">Login</button>
+
         <span class="login__navigate">Not a member? <a href="SignUpController">Sign up now</a></span>
     </form>
 </section>
@@ -55,7 +63,7 @@
     function handleChange()
     {
         let p_text_error = document.querySelector(".login__error")
-        p_text_error.innerHTML = ""
+        p_text_error.innerHTML = "";
     }
 </script>
 <%

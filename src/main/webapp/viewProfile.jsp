@@ -1,4 +1,7 @@
-<%@ page import="com.example.qcan.model.bean.Account" %><%--
+<%@ page import="com.example.qcan.model.bean.Account" %>
+<%@ page import="com.example.qcan.model.bean.Follow" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.qcan.model.bean.Post" %><%--
   Created by IntelliJ IDEA.
   User: ADMIN
   Date: 12/4/2023
@@ -15,6 +18,8 @@
     <link rel="stylesheet" type="text/css" href="css/content.css">
     <link rel="stylesheet" type="text/css" href="css/editProfile.css">
     <link rel="stylesheet" type="text/css" href="css/profile.css">
+    <link rel="stylesheet" type="text/css" href="css/modal.css">
+    <link rel="stylesheet" type="text/css" href="css/global.css">
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link
@@ -33,6 +38,11 @@
     Account user = (Account) request.getAttribute("user");
     session = request.getSession();
     Boolean isLogin = (Boolean) session.getAttribute("isLogin");
+    Follow countFl = (Follow) request.getAttribute("countFl");
+    Follow countFler = (Follow) request.getAttribute("countFler");
+    ArrayList<Account> listAccFler = (ArrayList<Account>) request.getAttribute("listAccFler");
+    ArrayList<Account> listAccFled = (ArrayList<Account>) request.getAttribute("listAccFled");
+    ArrayList<Post> listPost = (ArrayList<Post>) request.getAttribute("listPost");
     if (isLogin != null && isLogin == true && user != null) {
 %>
 
@@ -40,31 +50,24 @@
     <header class="header">
         <div class="header__container">
             <div class="header__link">
-                <a class="header__link-logo header__transision" href="">@</a>
+                <a href="NewsFeedController" class="header__link-logo header__transision" href="">@</a>
             </div>
             <div class="header__control">
-                <div class="header__control--button-container">
-                    <!-- active -->
-                    <!-- <i
-                      style="color: black"
-                      class="bx bxs-home header__control--button"
-                    ></i> -->
-                    <!-- non active -->
+                <a href="NewsFeedController" class="header__control--button-container">
+
                     <i
                             style="color: #ccc"
                             class="bx bx-home-alt-2 header__control--button"
                     ></i>
-                </div>
-                <div class="header__control--button-container">
-                    <!-- active -->
-                    <!-- <i class="bx bx-search header__control--button"></i> -->
-                    <!-- non active -->
+                </a>
+                <a href="SearchController" class="header__control--button-container">
+
                     <i
                             style="color: #ccc"
                             class="bx bx-search header__control--button"
                     ></i>
-                </div>
-                <div class="header__control--button-container">
+                </a>
+                <a href="NewsFeedController?Type=Followed" class="header__control--button-container">
                     <!-- non active -->
                     <i
                             style="color: #ccc"
@@ -72,8 +75,8 @@
                     ></i>
                     <!-- active -->
                     <!-- <i class="bx bxs-heart header__control--button"></i> -->
-                </div>
-                <div class="header__control--button-container">
+                </a>
+                <a style="color:black" href="UserController" class="header__control--button-container">
                     <!-- active -->
                     <!-- <i
                       style="color: #ccc"
@@ -81,7 +84,7 @@
                     ></i> -->
                     <!-- non active -->
                     <i class="bx bxs-user header__control--button"></i>
-                </div>
+                </a>
             </div>
             <div class="header__menu">
                 <input hidden id="header__menu--toggle" type="checkbox"/>
@@ -89,7 +92,9 @@
                     <i class="bx bx-menu-alt-right header__menu--button"></i>
                 </label>
                 <div class="header__menu--list">
-                    <div class="header__menu--item">Đăng xuất</div>
+                    <a href="UserController?Action=ChangePassword" style="text-decoration: none; color: black" class="header__menu--item">Change Password</a>
+                    <a href="LogOutController" style="text-decoration: none; color: black" class="header__menu--item">Log out</a>
+
                 </div>
             </div>
         </div>
@@ -110,25 +115,28 @@
                 </div>
             </div>
             <div class="user__bio">
+                <%if (user.getBio() != null && !user.getBio().equals("")) {%>
                 <%=user.getBio()%>
+                <%}%>
             </div>
             <div class="user__social">
                 <div class="user__social--follow">
-                    <span class="user__social--follow-infor"> 2 người theo dõi </span>
-                    <span class="user__social--follow-infor">
-                Đang theo dõi 2 người dùng
+                    <span style="cursor: pointer" onclick="toggleFollower()"
+                          class="user__social--follow-infor"> <%=countFler.getCountFollower()%> người theo dõi </span>
+                    <span style="cursor: pointer" onclick="toggleFollowed()" class="user__social--follow-infor">
+                Đang theo dõi <%=countFl.getCountFollow()%> người dùng
               </span>
                 </div>
                 <div class="user__social--link">
                     <%
-                        if (!user.getLinkFB().equals("") && user.getLinkFB() != null) {
+                        if (user.getLinkFB() != null && !user.getLinkFB().equals("")) {
                     %>
                     <a href="<%=user.getLinkFB()%>"><i class="bx user__social--icon bxl-facebook"></i></a>
                     <%
                         }
                     %>
                     <%
-                        if (!user.getLinkIns().equals("") && user.getLinkIns() != null) {
+                        if (user.getLinkIns() != null && !user.getLinkIns().equals("")) {
                     %>
                     <a href="<%=user.getLinkIns()%>"><i class="bx user__social--icon bxl-instagram"></i></a>
                     <%
@@ -147,63 +155,122 @@
 
             <div class="profile__status">
                 <div class="profile__status--header  profile__status--header-active">
-                    Bài đăng của tôi
+                    Bài đăng
                 </div>
-                <div class="profile__status--header">
-                    Đã thích
-                </div>
+
             </div>
+            <% for (Post post : listPost) { %>
             <div class="main__status">
-                <div class="main__status--ava-contain">
+                <a href="UserController?Id=<%=post.getIdUser()%>" class="main__status--ava-contain">
                     <img
                             class="main__post--avatar"
-                            src="<%if(user.getAvatar()!=null){%><%=user.getAvatar().replace(' ','+')%><%}%>"
+                            src="<%=post.getAvatar()%>"
                             class="main__status--ava"
                             alt=""
                     />
 
-                </div>
+                </a>
 
                 <div class="main__status--content">
                     <div class="main__status--header">
-                        <div class="main__status--username">sunnews</div>
-                        <div class="main__status--time">50 phút</div>
+                        <a href="UserController?Id=<%=post.getIdUser()%>" style="text-decoration: none; color:black" class="main__status--username"><%=post.getFullname()%></a>
+                        <div  style="text-decoration: none" class="main__status--time"><%=post.getPostTime()%></div>
                         <!-- <div class="main__status--action">
                           <i class="bx bx-dots-horizontal-rounded"></i>
                         </div> -->
                     </div>
                     <div>
-                        <div class="main__status--text">thôi không cần ghi</div>
+                        <div class="main__status--text">
+                            Song Name: <%=post.getSongName()%> <br>
+                            Song Type: <%=post.getSongType()%> <br>
+                            Musician: <%=post.getMusician()%> <br>
+                            <%=post.getPostContent()%>
+                        </div>
                         <div class="main__status--image-contain">
-                            <img
-                                    class="main__status--image"
-                                    src="https://scontent.cdninstagram.com/v/t39.30808-6/407391005_18286388227159883_383640245813341930_n.jpg?stp=dst-jpg_e15&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xMDgweDEzNTAuc2RyIn0&_nc_ht=scontent.cdninstagram.com&_nc_cat=111&_nc_ohc=5CcVJvmuMhkAX9DM6Je&edm=APs17CUAAAAA&ccb=7-5&ig_cache_key=MzI0ODYyNjA3ODYyNzExNjA3Mw%3D%3D.2-ccb7-5&oh=00_AfAHjwjb_tWdI4bzkFGYPDvedTWaent5Hzgb7wNJfLOg_g&oe=656D94F0&_nc_sid=10d13b"
-                                    alt=""
-                            />
-                            <img
-                                    class="main__status--image"
-                                    src="https://scontent.cdninstagram.com/v/t39.30808-6/407391005_18286388227159883_383640245813341930_n.jpg?stp=dst-jpg_e15&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xMDgweDEzNTAuc2RyIn0&_nc_ht=scontent.cdninstagram.com&_nc_cat=111&_nc_ohc=5CcVJvmuMhkAX9DM6Je&edm=APs17CUAAAAA&ccb=7-5&ig_cache_key=MzI0ODYyNjA3ODYyNzExNjA3Mw%3D%3D.2-ccb7-5&oh=00_AfAHjwjb_tWdI4bzkFGYPDvedTWaent5Hzgb7wNJfLOg_g&oe=656D94F0&_nc_sid=10d13b"
-                                    alt=""
-                            />
-                            <img
-                                    class="main__status--image"
-                                    src="https://scontent.cdninstagram.com/v/t39.30808-6/407391005_18286388227159883_383640245813341930_n.jpg?stp=dst-jpg_e15&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xMDgweDEzNTAuc2RyIn0&_nc_ht=scontent.cdninstagram.com&_nc_cat=111&_nc_ohc=5CcVJvmuMhkAX9DM6Je&edm=APs17CUAAAAA&ccb=7-5&ig_cache_key=MzI0ODYyNjA3ODYyNzExNjA3Mw%3D%3D.2-ccb7-5&oh=00_AfAHjwjb_tWdI4bzkFGYPDvedTWaent5Hzgb7wNJfLOg_g&oe=656D94F0&_nc_sid=10d13b"
-                                    alt=""
-                            />
+                            <video style="width: 100%;max-height: 500px" src="<% if(post.getVideoUrl()!= null ){%><%=post.getVideoUrl()%><%}%>" style="width: 100%" id="displayVideo" controls></video>
                         </div>
                         <div class="main__status--action">
-                            <i class="bx bx-heart main__status--heart"></i>
-                            <span class="main__status--heart-count"> 2 triệu </span>
+
                             <!-- active -->
                             <!-- <i style="color:#ff3040" class="bx bxs-heart main__status--heart"></i> -->
                         </div>
                     </div>
                 </div>
             </div>
+            <%}%>
+
         </div>
     </section>
+
 </div>
 
+<div onclick="toggleFollowed()" class="modal modal1 hidden"></div>
+<div class="fled followed-content hidden">
+    <div class="followed-header">
+        <span>Đang theo dõi</span>
+        <div onclick="
+        toggleFollowed()" class="followed-header__close">
+            <i class="bx bx-x followed-header__close--icon"></i>
+        </div>
+    </div>
+    <div class="followed-list-user">
+        <% for (Account fl : listAccFled) { %>
+        <div class="followed-user">
+            <div class="followed-user__avatar">
+                <img src="<%=fl.getAvatar()%>" alt="">
+            </div>
+            <div class="followed-user__infor">
+                <span style="font-size:14px;font-weight: bold;"><%=fl.getFullname()%></span>
+                <span style="font-size:13px;font-weight: bold; color:#737373"><%=fl.getNickname()%></span>
+            </div>
+        </div>
+        <%}%>
+
+    </div>
+</div>
+
+<div onclick="toggleFollower()" class="modal modal2 hidden"></div>
+<div class="fler followed-content hidden">
+    <div class="followed-header">
+        <span>Người theo dõi</span>
+        <div onclick="
+        toggleFollower()" class="followed-header__close">
+            <i class="bx bx-x followed-header__close--icon"></i>
+        </div>
+    </div>
+    <div class="followed-list-user">
+        <% for (Account fl : listAccFler) { %>
+        <div class="followed-user">
+            <div class="followed-user__avatar">
+                <img src="<%=fl.getAvatar()%>" alt="">
+            </div>
+            <div class="followed-user__infor">
+                <span style="font-size:14px;font-weight: bold;"><%=fl.getFullname()%></span>
+                <span style="font-size:13px;font-weight: bold; color:#737373"><%=fl.getNickname()%></span>
+            </div>
+        </div>
+        <%}%>
+
+    </div>
+</div>
+<script>
+
+    function toggleFollowed() {
+        let modal = document.querySelector(".modal1")
+        let content = document.querySelector(".fled")
+
+        modal.classList.toggle("hidden")
+        content.classList.toggle("hidden")
+    }
+
+    function toggleFollower() {
+        let modal = document.querySelector(".modal2")
+        let content = document.querySelector(".fler")
+
+        modal.classList.toggle("hidden")
+        content.classList.toggle("hidden")
+    }
+</script>
 
 <%
 } else {
@@ -220,4 +287,23 @@
 %>
 
 </body>
+
+<script>
+    // Function to open the followers popup
+    function openFollowersPopup(userId) {
+        $.ajax({
+            url: 'listFL.jsp',
+            type: 'GET',
+            data: {userId: userId},
+            success: function (response) {
+                // Open a popup and inject the response HTML
+                var popup = window.open('listFL.jsp', '_blank', 'width=400, height=400');
+                popup.document.write(response);
+            },
+            error: function (error) {
+                console.log('Error fetching followers: ', error);
+            }
+        });
+    }
+</script>
 </html>
