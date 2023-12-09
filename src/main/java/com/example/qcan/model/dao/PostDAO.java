@@ -126,7 +126,7 @@ public class PostDAO {
 
         try {
             Connection connection = ConnectDB.getConnection();
-            String sql = "SELECT * from post where IdUser = ? order by post.PostTime DESC";
+            String sql = "SELECT * from post inner join account on post.IdUser = account.id where IdUser = ? order by post.PostTime DESC";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
@@ -165,7 +165,9 @@ public class PostDAO {
 
         try {
             Connection connection = ConnectDB.getConnection();
-            String sql = "SELECT * from post inner join follow on post.IdUser = follow.idFled where follow.idFler = ? order by post.PostTime DESC";
+            String sql = "SELECT * from post inner join follow on post.IdUser = follow.idFled\n" +
+                    "inner join account on post.IdUser = account.id\n" +
+                    "where follow.idFler = 1 order by post.PostTime DESC ";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
@@ -203,7 +205,7 @@ public class PostDAO {
 
         try {
             Connection connection = ConnectDB.getConnection();
-            String sql = "SELECT * from post order by PostTime DESC";
+            String sql = "SELECT * from post,account order by PostTime DESC";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
