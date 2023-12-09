@@ -3,49 +3,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Trang chủ</title>
-
     <style>
-        table {
+        *{
+            box-shadow: 0 0 30px #fff;
+            border-radius: 10px;
+        }
+
+        .khung1,.khung2,.khung3{
+            border: none;
+        }
+        .khung1{
             width: 100%;
-            border-collapse: collapse;
+        }
+        .khung2,.khung4{
+            width: 20%;
+        }
+        .khung3{
+            width: 79.3%;
+        }
+        .khung2,.khung3{
+            height: 570px;
         }
 
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        tr:hover {
-            background-color: #f5f5f5;
-        }
     </style>
 </head>
 <body>
-<h1>Admin</h1>
-
-<table>
-    <tr>
-        <th>Actions</th>
-
-    </tr>
-    <tr>
-        <td><a href="UserManagementServlet?action=delete_user">Quản lý người dùng</a></td>
-    </tr>
-    <tr>
-<%--        --%>
-    </tr>
-
-</table>
-
+<iframeset>
+    <iframe name="khung1" src="T1.jsp" class="khung1"></iframe>
+    <iframeset>
+        <iframe name="khung2" src="T2.jsp" class="khung2"></iframe>
+        <iframe name="khung3" src="T3.jsp" class="khung3"></iframe>
+    </iframeset>
+</iframeset>
 </body>
 </html>
-<%
-
-%>
