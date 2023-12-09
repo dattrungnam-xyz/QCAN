@@ -33,4 +33,7 @@ public class PostBO {
     public ArrayList<Post> getPostByTime(){
         return postDAO.getListPostByTimeDES();
     }
+    public boolean deletePostById(int postId) {
+        return postDAO.deletePostrById(postId);
+    }
 }

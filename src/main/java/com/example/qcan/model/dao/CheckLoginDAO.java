@@ -11,7 +11,7 @@ public class CheckLoginDAO {
     public boolean isValidUser(String Username, String Password) {
         try {
             Connection connection = ConnectDB.getConnection();
-            String sql = "SELECT * FROM account where username = ?";
+            String sql = "SELECT * FROM account where username = ? and isLock = 0";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, Username);

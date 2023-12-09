@@ -40,7 +40,7 @@ public class UserBO {
             return null;
         }
     }
-    public boolean deleteUserById(int userId) {
-        return userDAO.deleteUserById(userId);
+    public boolean lockUserById(int userId) {
+        return userDAO.lockUserById(userId);
     }
 }

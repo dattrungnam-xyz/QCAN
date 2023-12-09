@@ -37,8 +37,10 @@
     </tr>
     <tr>
         <td><a href="UserManagementServlet?action=delete_user">Quản lý người dùng</a></td>
+
     </tr>
     <tr>
+        <td><a href="PostManagementServlet?action=delete_post">Quản lý bài viết</a></td>
 <%--        --%>
     </tr>
 

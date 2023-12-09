@@ -174,6 +174,7 @@ public class UserDAO {
                 user.setLinkFB(resultSet.getString("linkfb"));
                 user.setLinkIns(resultSet.getString("linkins"));
                 user.setEmail(resultSet.getString("email"));
+                user.setisLock(resultSet.getBoolean("isLock"));
                 userList.add(user);
             }
             return userList;
@@ -183,10 +184,10 @@ public class UserDAO {
             return null;
         }
     }
-    public boolean deleteUserById(int userId) {
+    public boolean lockUserById(int userId) {
         try {
             Connection connection = ConnectDB.getConnection();
-            String sql = "DELETE FROM account WHERE id = ?";
+            String sql = "update account set isLock = 1 where id = ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, userId);

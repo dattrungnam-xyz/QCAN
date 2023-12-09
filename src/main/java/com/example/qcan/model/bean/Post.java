@@ -18,6 +18,8 @@ public class Post {
     private String Nickname;
     private String Avatar;
 
+    private boolean ofUserLock;
+
 
     public int getIdPost() {
         return IdPost;
@@ -114,5 +116,13 @@ public class Post {
 
     public int getCountLike() {
         return CountLike;
+    }
+
+    public boolean getofUserLock(){
+        return ofUserLock;
+    }
+
+    public void setofUserLock(boolean ofUserLock){
+        this.ofUserLock = ofUserLock;
     }
 }

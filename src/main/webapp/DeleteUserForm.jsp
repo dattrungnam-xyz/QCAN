@@ -44,6 +44,7 @@
 <%
     List<Account> userList = (List<Account>) request.getAttribute("userList");
     for (Account user : userList) {
+        if (user.getisLock()==false){
 %>
 <div>
     <p>ID: <%= user.getId() %></p>
@@ -66,6 +67,6 @@
 
     <hr>
 </div>
-<% } %>
+<% }} %>
 </body>
 </html>

@@ -14,6 +14,8 @@ public class Account {
     private String LinkFB;
     private String LinkIns;
 
+    private boolean isLock;
+
     public void setId(int id) {
         Id = id;
     }
@@ -52,6 +54,10 @@ public class Account {
 
     public String getLinkFB() {
         return LinkFB;
+    }
+
+    public boolean getisLock(){
+        return this.isLock;
     }
 
     public String getLinkIns() {
@@ -96,6 +102,10 @@ public class Account {
 
     public void setEmail(String email) {
         Email = email;
+    }
+
+    public void setisLock(boolean isLock){
+        this.isLock = isLock;
     }
 
     public String getEmail() {

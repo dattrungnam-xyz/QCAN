@@ -197,7 +197,7 @@ public class PostDAO {
 
         try {
             Connection connection = ConnectDB.getConnection();
-            String sql = "SELECT * from post,account order by PostTime DESC";
+            String sql = "SELECT post.IdPost,post.PostTime,post.IdUser,post.SongName,post.SongType,post.Musician,post.PostContent,post.Video, account.fullname,account.nickname,account.avatar from post, account WHERE post.IdUser = account.id order by post.PostTime DESC";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -223,6 +223,21 @@ public class PostDAO {
             throw new RuntimeException(e);
         }
         return list;
+    }
+    public boolean deletePostrById(int postId) {
+        try {
+            Connection connection = ConnectDB.getConnection();
+            String sql = "DELETE FROM post WHERE IdPost = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, postId);
+
+            int affectedRows = preparedStatement.executeUpdate();
+
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
