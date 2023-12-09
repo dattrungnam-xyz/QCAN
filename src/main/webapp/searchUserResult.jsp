@@ -36,10 +36,10 @@
     <header class="header">
         <div class="header__container">
             <div class="header__link">
-                <a class="header__link-logo header__transision" href="">@</a>
+                <a class="header__link-logo header__transision" href="NewsFeedController">@</a>
             </div>
             <div class="header__control">
-                <div class="header__control--button-container">
+                <a href="NewsFeedController" style="color:#ccc;text-decoration: none" class="header__control--button-container">
                     <!-- active -->
                     <!-- <i
                       style="color: black"
@@ -50,8 +50,8 @@
                             style="color: #ccc"
                             class="bx bx-home-alt-2 header__control--button"
                     ></i>
-                </div>
-                <div class="header__control--button-container">
+                </a>
+                <a href="SearchController" style="color:black;text-decoration: none" class="header__control--button-container">
                     <!-- active -->
                     <i class="bx bx-search header__control--button"></i>
                     <!-- non active -->
@@ -59,8 +59,8 @@
                       style="color: #ccc"
                       class="bx bx-search header__control--button"
                     ></i> -->
-                </div>
-                <div class="header__control--button-container">
+                </a>
+                <a href="NewsFeedController?Type=Followed" style="color: #ccc;text-decoration: none" class="header__control--button-container">
                     <!-- non active -->
                     <i
                             style="color: #ccc"
@@ -68,8 +68,8 @@
                     ></i>
                     <!-- active -->
                     <!-- <i class="bx bxs-heart header__control--button"></i> -->
-                </div>
-                <div class="header__control--button-container">
+                </a>
+                <a href="UserController" style="color:#ccc;text-decoration: none" class="header__control--button-container">
                     <!-- active -->
                     <i
                             style="color: #ccc"
@@ -77,7 +77,7 @@
                     ></i>
                     <!-- non active -->
                     <!-- <i class="bx bxs-user header__control--button"></i> -->
-                </div>
+                </a>
             </div>
             <div class="header__menu">
                 <input hidden id="header__menu--toggle" type="checkbox"/>

@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="css/layout.css">
     <link rel="stylesheet" type="text/css" href="css/content.css">
     <link rel="stylesheet" type="text/css" href="css/editProfile.css">
+    <link rel="stylesheet" type="text/css" href="css/global.css">
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link
@@ -37,31 +38,24 @@
     <header class="header">
         <div class="header__container">
             <div class="header__link">
-                <a class="header__link-logo header__transision" href="">@</a>
+                <a href="NewsFeedController" class="header__link-logo header__transision" href="">@</a>
             </div>
             <div class="header__control">
-                <div class="header__control--button-container">
-                    <!-- active -->
-                    <!-- <i
-                      style="color: black"
-                      class="bx bxs-home header__control--button"
-                    ></i> -->
-                    <!-- non active -->
+                <a href="NewsFeedController" class="header__control--button-container">
+
                     <i
                             style="color: #ccc"
                             class="bx bx-home-alt-2 header__control--button"
                     ></i>
-                </div>
-                <div class="header__control--button-container">
-                    <!-- active -->
-                    <!-- <i class="bx bx-search header__control--button"></i> -->
-                    <!-- non active -->
+                </a>
+                <a href="SearchController" class="header__control--button-container">
+
                     <i
                             style="color: #ccc"
                             class="bx bx-search header__control--button"
                     ></i>
-                </div>
-                <div class="header__control--button-container">
+                </a>
+                <a href="NewsFeedController?Type=Followed" class="header__control--button-container">
                     <!-- non active -->
                     <i
                             style="color: #ccc"
@@ -69,16 +63,16 @@
                     ></i>
                     <!-- active -->
                     <!-- <i class="bx bxs-heart header__control--button"></i> -->
-                </div>
-                <div class="header__control--button-container">
-                    <!--non active -->
+                </a>
+                <a href="UserController" class="header__control--button-container">
+                    <!-- active -->
                     <!-- <i
                       style="color: #ccc"
                       class="bx bx-user header__control--button"
                     ></i> -->
-                    <!--  active -->
-                    <i class="bx bxs-user header__control--button"></i>
-                </div>
+                    <!-- non active -->
+                    <i style="color:black" class="bx bxs-user header__control--button"></i>
+                </a>
             </div>
             <div class="header__menu">
                 <input hidden id="header__menu--toggle" type="checkbox"/>
@@ -86,7 +80,9 @@
                     <i class="bx bx-menu-alt-right header__menu--button"></i>
                 </label>
                 <div class="header__menu--list">
-                    <div class="header__menu--item">Đăng xuất</div>
+                    <a href="UserController?Action=ChangePassword" style="text-decoration: none; color: black" class="header__menu--item">Change Password</a>
+                    <a href="LogOutController" style="text-decoration: none; color: black" class="header__menu--item">Log out</a>
+
                 </div>
             </div>
         </div>
