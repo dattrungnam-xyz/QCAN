@@ -8,6 +8,7 @@ import com.example.qcan.model.bean.Post;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PostDAO {
     public void createPost(Post post)
@@ -233,5 +234,50 @@ public class PostDAO {
             throw new RuntimeException(e);
         }
         return list;
+    }
+    // Lấy danh sách tất cả bài viết để admin quản lý bài viết
+    public List<Post> getAllPosts() {
+        List<Post> postList = new ArrayList<>();
+
+        try (Connection connection = ConnectDB.getConnection()) {
+            String sql = "SELECT * FROM post ORDER BY PostTime DESC";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                 ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Post post = new Post();
+                    post.setIdPost(resultSet.getInt("IdPost"));
+                    post.setIdUser(resultSet.getInt("IdUser"));
+                    post.setPostTime(resultSet.getTimestamp("PostTime").toLocalDateTime());
+                    post.setSongName(resultSet.getString("SongName"));
+                    post.setSongType(resultSet.getString("SongType"));
+                    post.setMusician(resultSet.getString("Musician"));
+                    post.setPostContent(resultSet.getString("PostContent"));
+                    post.setVideoUrl(resultSet.getString("Video"));
+                    postList.add(post);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return postList;
+    }
+
+    // Xóa bài viết theo ID (admin)
+    public boolean deletePost(int Idpost) {
+        try {
+            Connection connection = ConnectDB.getConnection();
+            String sql = "DELETE FROM post WHERE IdPost = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, Idpost);
+
+            int affectedRows = preparedStatement.executeUpdate();
+
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

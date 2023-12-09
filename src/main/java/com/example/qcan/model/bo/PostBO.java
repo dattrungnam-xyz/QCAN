@@ -4,6 +4,7 @@ import com.example.qcan.model.bean.Post;
 import com.example.qcan.model.dao.PostDAO;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PostBO {
     PostDAO postDAO = new PostDAO();
@@ -33,4 +34,11 @@ public class PostBO {
     public ArrayList<Post> getPostByTime(){
         return postDAO.getListPostByTimeDES();
     }
+    public List<Post> getAllPosts(){
+        return postDAO.getAllPosts();
+    }
+    public boolean deletePost(int postId){
+        return postDAO.deletePost(postId);
+    }
+
 }

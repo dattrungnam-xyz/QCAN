@@ -1,6 +1,8 @@
 package com.example.qcan.controller;
 
 import com.example.qcan.model.bean.Account;
+import com.example.qcan.model.bean.Post;
+import com.example.qcan.model.bo.PostBO;
 import com.example.qcan.model.bo.UserBO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -22,8 +24,11 @@ public class UserManagementServlet extends HttpServlet {
         }
 
         switch (action) {
-            case "delete_user":
+            case "Admin_delete_user":
                 showDeleteForm(request, response);
+                break;
+            case "Admin_view_posts":
+                viewAllPosts(request, response);
                 break;
 
             default:
@@ -43,6 +48,9 @@ public class UserManagementServlet extends HttpServlet {
             case "delete":
                 deleteUser(request, response);
                 break;
+            case "Admin_delete_post":
+                deletePost(request, response);
+                break;
             default:
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 break;
@@ -50,26 +58,28 @@ public class UserManagementServlet extends HttpServlet {
     }
 
     private void showDeleteForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Lấy danh sách người dùng từ cơ sở dữ liệu
         UserBO userBO = new UserBO();
         List<Account> userList = userBO.getAllUsers();
-
-        // Đặt danh sách người dùng vào request attribute để truyền cho JSP
         request.setAttribute("userList", userList);
-
-        // Chuyển hướng đến trang DeleteUserForm.jsp
         request.getRequestDispatcher("/DeleteUserForm.jsp").forward(request, response);
     }
 
     private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Lấy thông tin về người dùng cần xóa từ request
         int userId = Integer.parseInt(request.getParameter("userId"));
-
-        // Gọi phương thức xóa người dùng từ UserBO hoặc UserDAO
         UserBO userBO = new UserBO();
         boolean deleted = userBO.deleteUserById(userId);
-
-        // Chuyển hướng đến trang hiển thị sau khi xóa (ví dụ: trang chính của admin)
         response.sendRedirect("AdminHome.jsp");
+    }
+    private void viewAllPosts(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        PostBO postBO = new PostBO();
+        List<Post> postList = postBO.getAllPosts();
+        request.setAttribute("postList", postList);
+        request.getRequestDispatcher("/ViewAllPosts.jsp").forward(request, response);
+    }
+    private void deletePost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int postId = Integer.parseInt(request.getParameter("postId"));
+        PostBO postBO = new PostBO();
+        postBO.deletePost(postId);
+        response.sendRedirect("/AdminHome.jsp");
     }
 }
