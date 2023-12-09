@@ -2,10 +2,9 @@ package com.example.qcan.model.dao;
 
 import com.example.qcan.model.bean.Account;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO {
     public boolean isValid(int Id,String field, String value) {
@@ -154,6 +153,52 @@ public class UserDAO {
             throw new RuntimeException(e);
         }
     }
+    public List<Account> getAllUsers() {
+        try {
+            Connection connection = ConnectDB.getConnection();
+            String sql = "SELECT * FROM account WHERE role = 'user'";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            List<Account> userList = new ArrayList<>();
+
+            while (resultSet.next()) {
+                Account user = new Account();
+                user.setId(resultSet.getInt("id"));
+                user.setUsername(resultSet.getString("username"));
+                user.setFullname(resultSet.getString("fullname"));
+                user.setNickname(resultSet.getString("nickname"));
+                user.setBio(resultSet.getString("bio"));
+                user.setAvatar(resultSet.getString("avatar"));
+                user.setRole(resultSet.getString("role"));
+                user.setLinkFB(resultSet.getString("linkfb"));
+                user.setLinkIns(resultSet.getString("linkins"));
+                user.setEmail(resultSet.getString("email"));
+                userList.add(user);
+            }
+            return userList;
+        } catch (SQLException e) {
+            // Xử lý ngoại lệ, có thể log và/hoặc thông báo lỗi
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public boolean deleteUserById(int userId) {
+        try {
+            Connection connection = ConnectDB.getConnection();
+            String sql = "DELETE FROM account WHERE id = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
+
+            int affectedRows = preparedStatement.executeUpdate();
+
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public Account getUserByID(int Id) {
         try {
