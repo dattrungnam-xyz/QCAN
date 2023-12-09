@@ -37,7 +37,7 @@ public class CheckLoginController extends HttpServlet {
             session.setAttribute("isLogin", true);
             session.setAttribute("id", user.getId());
             session.setAttribute("username", user.getUsername());
-
+            session.setAttribute("user", user);
 
             request.setAttribute("user",user);
             destination = "/indexTemp.jsp";
