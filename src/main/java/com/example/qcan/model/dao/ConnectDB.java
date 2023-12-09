@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class ConnectDB {
     private static final String Url = "jdbc:mysql://localhost:3306/btn_ltm";
     private static final String Username = "root";
-    private static final String Password = "123456789";
+    private static final String Password = "123456789";//Vu
     private static final String DRIVER = "com.mysql.jdbc.Driver";
     private static Connection connection = null;
     static {
