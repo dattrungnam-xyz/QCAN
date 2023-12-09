@@ -29,8 +29,10 @@ public class UserController extends HttpServlet {
         {
             HttpSession session = request.getSession();
 
+            int IdSession =0;
 
-            int IdSession = (int)session.getAttribute("id");
+            if(session.getAttribute("id")!=null)
+            {IdSession= (int)session.getAttribute("id");}
             String Id = (String) request.getParameter("Id");
 
 

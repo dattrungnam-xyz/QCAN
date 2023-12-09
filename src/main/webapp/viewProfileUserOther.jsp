@@ -46,7 +46,7 @@
 
     session = request.getSession();
     Boolean isLogin = (Boolean) session.getAttribute("isLogin");
-    if (isLogin != null && isLogin == true && user != null) {
+
         if (user.getNickname() == null) {
 %>
 
@@ -110,6 +110,7 @@
                 <label class="header__menu--label" for="header__menu--toggle">
                     <i class="bx bx-menu-alt-right header__menu--button"></i>
                 </label>
+
                 <div class="header__menu--list">
                     <div class="header__menu--item">Đăng xuất</div>
                 </div>
@@ -152,6 +153,7 @@
                     // Set the current URL in the session
                     session.setAttribute("currentUserView", user.getId());
                 %>
+                <%   if (isLogin != null && isLogin == true ) {%>
                 <%if(isFl.isFled() ==false){%>
                 <form method="post" action="FollowController?Action=Follow&Id=<%=user.getId()%>">
                 <button style="cursor: pointer;color:white !important; background-color: black !important"
@@ -170,7 +172,7 @@
                 </button>
                 </form>
                 <%}%>
-
+                <%}%>
             </div>
 
             <div class="profile__status">
@@ -304,19 +306,8 @@
 %>
 
 
-<%
-} else {
-%>
 
 
-<div class="nologin">
-    <span class="nologin__title">oops!</span>
-    <span class="nologin__detail"> You are not logged in. Please log in and try again! </span>
-    <a class="nologin__button" href="CheckLoginController">Login</a>
-</div>
-<%
-    }
-%>
 
 </body>
 </html>
