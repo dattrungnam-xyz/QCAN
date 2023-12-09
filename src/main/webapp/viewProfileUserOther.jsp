@@ -2,6 +2,7 @@
 <%@ page import="com.example.qcan.model.bean.Follow" %>
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.qcan.model.bean.Post" %>
 <%--
   Created by IntelliJ IDEA.
   User: ADMIN
@@ -43,10 +44,10 @@
 
     ArrayList<Account> listAccFler = (ArrayList<Account>) request.getAttribute("listAccFler");
     ArrayList<Account> listAccFled = (ArrayList<Account>) request.getAttribute("listAccFled");
-
+    ArrayList<Post> listPost = (ArrayList<Post>) request.getAttribute("listPost");
     session = request.getSession();
     Boolean isLogin = (Boolean) session.getAttribute("isLogin");
-    if (isLogin != null && isLogin == true && user != null) {
+
         if (user.getNickname() == null) {
 %>
 
@@ -110,6 +111,7 @@
                 <label class="header__menu--label" for="header__menu--toggle">
                     <i class="bx bx-menu-alt-right header__menu--button"></i>
                 </label>
+
                 <div class="header__menu--list">
                     <div class="header__menu--item">Đăng xuất</div>
                 </div>
@@ -152,6 +154,7 @@
                     // Set the current URL in the session
                     session.setAttribute("currentUserView", user.getId());
                 %>
+                <%   if (isLogin != null && isLogin == true ) {%>
                 <%if(isFl.isFled() ==false){%>
                 <form method="post" action="FollowController?Action=Follow&Id=<%=user.getId()%>">
                 <button style="cursor: pointer;color:white !important; background-color: black !important"
@@ -170,63 +173,54 @@
                 </button>
                 </form>
                 <%}%>
-
+                <%}%>
             </div>
 
             <div class="profile__status">
                 <div class="profile__status--header  profile__status--header-active">
-                    Bài đăng của tôi
+                    Bài đăng
                 </div>
-                <div class="profile__status--header">
-                    Đã thích
-                </div>
+
             </div>
+            <% for (Post post : listPost) { %>
             <div class="main__status">
-                <div class="main__status--ava-contain">
+                <a href="UserController?Id=<%=post.getIdUser()%>" class="main__status--ava-contain">
                     <img
                             class="main__post--avatar"
-                            src="<%if(user.getAvatar()!=null){%><%=user.getAvatar().replace(' ','+')%><%}%>"
+                            src="<%=post.getAvatar()%>"
                             class="main__status--ava"
                             alt=""
                     />
-                </div>
+
+                </a>
 
                 <div class="main__status--content">
                     <div class="main__status--header">
-                        <div class="main__status--username">sunnews</div>
-                        <div class="main__status--time">50 phút</div>
+                        <a href="UserController?Id=<%=post.getIdUser()%>" style="text-decoration: none; color:black" class="main__status--username"><%=post.getFullname()%></a>
+                        <div  style="text-decoration: none" class="main__status--time"><%=post.getPostTime()%></div>
                         <!-- <div class="main__status--action">
                           <i class="bx bx-dots-horizontal-rounded"></i>
                         </div> -->
                     </div>
                     <div>
-                        <div class="main__status--text">thôi không cần ghi</div>
+                        <div class="main__status--text">
+                            Song Name: <%=post.getSongName()%> <br>
+                            Song Type: <%=post.getSongType()%> <br>
+                            Musician: <%=post.getMusician()%> <br>
+                            <%=post.getPostContent()%>
+                        </div>
                         <div class="main__status--image-contain">
-                            <img
-                                    class="main__status--image"
-                                    src="https://scontent.cdninstagram.com/v/t39.30808-6/407391005_18286388227159883_383640245813341930_n.jpg?stp=dst-jpg_e15&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xMDgweDEzNTAuc2RyIn0&_nc_ht=scontent.cdninstagram.com&_nc_cat=111&_nc_ohc=5CcVJvmuMhkAX9DM6Je&edm=APs17CUAAAAA&ccb=7-5&ig_cache_key=MzI0ODYyNjA3ODYyNzExNjA3Mw%3D%3D.2-ccb7-5&oh=00_AfAHjwjb_tWdI4bzkFGYPDvedTWaent5Hzgb7wNJfLOg_g&oe=656D94F0&_nc_sid=10d13b"
-                                    alt=""
-                            />
-                            <img
-                                    class="main__status--image"
-                                    src="https://scontent.cdninstagram.com/v/t39.30808-6/407391005_18286388227159883_383640245813341930_n.jpg?stp=dst-jpg_e15&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xMDgweDEzNTAuc2RyIn0&_nc_ht=scontent.cdninstagram.com&_nc_cat=111&_nc_ohc=5CcVJvmuMhkAX9DM6Je&edm=APs17CUAAAAA&ccb=7-5&ig_cache_key=MzI0ODYyNjA3ODYyNzExNjA3Mw%3D%3D.2-ccb7-5&oh=00_AfAHjwjb_tWdI4bzkFGYPDvedTWaent5Hzgb7wNJfLOg_g&oe=656D94F0&_nc_sid=10d13b"
-                                    alt=""
-                            />
-                            <img
-                                    class="main__status--image"
-                                    src="https://scontent.cdninstagram.com/v/t39.30808-6/407391005_18286388227159883_383640245813341930_n.jpg?stp=dst-jpg_e15&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xMDgweDEzNTAuc2RyIn0&_nc_ht=scontent.cdninstagram.com&_nc_cat=111&_nc_ohc=5CcVJvmuMhkAX9DM6Je&edm=APs17CUAAAAA&ccb=7-5&ig_cache_key=MzI0ODYyNjA3ODYyNzExNjA3Mw%3D%3D.2-ccb7-5&oh=00_AfAHjwjb_tWdI4bzkFGYPDvedTWaent5Hzgb7wNJfLOg_g&oe=656D94F0&_nc_sid=10d13b"
-                                    alt=""
-                            />
+                            <video style="width: 100%;max-height: 500px" src="<% if(post.getVideoUrl()!= null ){%><%=post.getVideoUrl()%><%}%>" style="width: 100%" id="displayVideo" controls></video>
                         </div>
                         <div class="main__status--action">
-                            <i class="bx bx-heart main__status--heart"></i>
-                            <span class="main__status--heart-count"> 2 triệu </span>
+
                             <!-- active -->
                             <!-- <i style="color:#ff3040" class="bx bxs-heart main__status--heart"></i> -->
                         </div>
                     </div>
                 </div>
             </div>
+            <%}%>
         </div>
     </section>
 </div>
@@ -304,19 +298,8 @@
 %>
 
 
-<%
-} else {
-%>
 
 
-<div class="nologin">
-    <span class="nologin__title">oops!</span>
-    <span class="nologin__detail"> You are not logged in. Please log in and try again! </span>
-    <a class="nologin__button" href="CheckLoginController">Login</a>
-</div>
-<%
-    }
-%>
 
 </body>
 </html>

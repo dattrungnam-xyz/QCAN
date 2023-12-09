@@ -94,7 +94,7 @@ public class FollowDAO {
         return fl;
     }
     public ArrayList<Follow> getFollowed(int IdUser){
-        Follow fl = new Follow();
+
         ArrayList<Follow> listfl = new ArrayList<Follow>();
         try {
             Connection connection = ConnectDB.getConnection();
@@ -107,6 +107,7 @@ public class FollowDAO {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
+                Follow fl = new Follow();
                 fl.setIdFled(resultSet.getInt("idFled"));
                 listfl.add(fl);
             }

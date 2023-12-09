@@ -13,6 +13,7 @@ public class Post {
     private String PostContent;
     private String VideoUrl;
 
+    private int CountLike;
     private String Fullname;
     private String Nickname;
     private String Avatar;
@@ -107,4 +108,11 @@ public class Post {
         return Fullname;
     }
 
+    public void setCountLike(int countLike) {
+        CountLike = countLike;
+    }
+
+    public int getCountLike() {
+        return CountLike;
+    }
 }
