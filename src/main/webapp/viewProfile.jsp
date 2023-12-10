@@ -96,7 +96,7 @@
                     <%if(isLogin!= null && isLogin==true){%>
                     <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="UserController?Action=ChangePassword">Change Password</a></div>
 
-                    <%if(user.getRole().equals("user")){%><div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="UserController?Action=RequestRole">Request Role Musician</a></div><%}%>
+                    <%if(user!=null && user.getRole().equals("user")){%><div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="UserController?Action=RequestRole">Request Role Musician</a></div><%}%>
                     <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="LogOutController">Logout</a></div>
                     <%} else {%>
                     <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="CheckLoginController">Login</a></div>
@@ -231,7 +231,7 @@
     </div>
     <div class="followed-list-user">
         <% for (Account fl : listAccFled) { %>
-        <div class="followed-user">
+        <a style="text-decoration: none" href="UserController?Id=<%=fl.getId()%>" class="followed-user">
             <div class="followed-user__avatar">
                 <img src="<%=fl.getAvatar()%>" alt="">
             </div>
@@ -239,7 +239,7 @@
                 <span style="font-size:14px;font-weight: bold;"><%=fl.getFullname()%></span>
                 <span style="font-size:13px;font-weight: bold; color:#737373"><%=fl.getNickname()%></span>
             </div>
-        </div>
+        </a>
         <%}%>
 
     </div>
@@ -256,7 +256,7 @@
     </div>
     <div class="followed-list-user">
         <% for (Account fl : listAccFler) { %>
-        <div class="followed-user">
+        <a style="text-decoration: none" href="UserController?Id=<%=fl.getId()%>" class="followed-user">
             <div class="followed-user__avatar">
                 <img src="<%=fl.getAvatar()%>" alt="">
             </div>
@@ -264,7 +264,7 @@
                 <span style="font-size:14px;font-weight: bold;"><%=fl.getFullname()%></span>
                 <span style="font-size:13px;font-weight: bold; color:#737373"><%=fl.getNickname()%></span>
             </div>
-        </div>
+        </a>
         <%}%>
 
     </div>

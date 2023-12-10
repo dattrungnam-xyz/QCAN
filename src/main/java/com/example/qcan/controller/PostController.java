@@ -155,38 +155,50 @@ public class PostController extends HttpServlet {
             String destination = null;
             //redirect sang no permission
 
-            destination = "/PostController?Action=Update&IdPost="+IdPost+"&message=Update post success!";
+            destination = "/noPermission.jsp";
             response.sendRedirect(request.getContextPath() + destination);
         }
-
-
 
     }
     private void viewFormCreate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String destination = "/postStatus.jsp";
         HttpSession session = request.getSession();
-        UserBO userBO = new UserBO();
-        String username = (String) session.getAttribute("username");
-        Account user = userBO.getAccount(username);
+        Account user = (Account) session.getAttribute("user");
         request.setAttribute("user", user);
-
+        if(user.getRole().equals("musician"))
+        {
+             destination = "/postStatus.jsp";
+        }
+        else {
+            destination = "/noPermission.jsp";
+        }
         RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
         rd.forward(request, response);
     }
 
     private void viewFormUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String IdPost = (String) request.getParameter("IdPost");
+
         if (IdPost != null) {
             PostBO postBO = new PostBO();
             Post post = postBO.getPostByIdPost(Integer.parseInt(IdPost));
-            String destination = "/formUpdatePost.jsp";
-
             HttpSession session = request.getSession();
-            UserBO userBO = new UserBO();
-            String username = (String) session.getAttribute("username");
-            Account user = userBO.getAccount(username);
-            request.setAttribute("user", user);
-            request.setAttribute("post", post);
+            Account user = (Account)session.getAttribute("user");
+            String destination = null;
+            if(post.getIdUser() == user.getId())
+            {
+                 destination = "/formUpdatePost.jsp";
+
+                request.setAttribute("user", user);
+                request.setAttribute("post", post);
+            }
+            else
+            {
+                request.setAttribute("user", user);
+                destination = "/noPermission.jsp";
+            }
+
             RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
             rd.forward(request, response);
         }
