@@ -110,7 +110,7 @@
         <div class="main__content">
             <div class="user__infor">
                 <div class="user__infor--account">
-                    <span class="user__name"> <%=user.getFullname()%></span>
+                    <span class="user__name"> <%=user.getFullname()%> <%if(user.getRole().equals("musician"))%><i class='bx bx-music' ></i><%%></span>
                     <span class="user__username"> @<%=user.getNickname()%></span>
                 </div>
                 <div class="user__avatar">
