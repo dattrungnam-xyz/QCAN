@@ -29,4 +29,9 @@ public class UserBO {
     {
         return userDAO.getUserByID(Id);
     }
+    public void requestRole(int id)
+    {
+        userDAO.requestRole(id );
+    }
+
 }

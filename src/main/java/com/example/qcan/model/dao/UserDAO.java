@@ -174,12 +174,28 @@ public class UserDAO {
                 user.setNickname(resultSet.getString("nickname"));
                 user.setBio(resultSet.getString("bio"));
                 user.setAvatar(resultSet.getString("avatar"));
-
+                user.setRole(resultSet.getString("role"));
                 user.setLinkFB(resultSet.getString("linkfb"));
                 user.setLinkIns(resultSet.getString("linkins"));
 
             }
             return user;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void requestRole(int Id)
+    {
+        try {
+            Connection connection = ConnectDB.getConnection();
+            String sql = "UPDATE account SET requestRole = ?  WHERE id = ?  " ;
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setBoolean(1, true);
+            preparedStatement.setInt(2, Id);
+
+            int affectedRows = preparedStatement.executeUpdate();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
