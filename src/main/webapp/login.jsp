@@ -30,7 +30,7 @@
 <section class="login__container">
     <form onsubmit="return handleSubmit()" method="post" action="CheckLoginController" class="login">
             <span class="login__title">
-                Login
+                <h1>Login</h1>
             </span>
         <input id="username" class="login__input" onchange="handleChange()" type="text" name="username" placeholder="Username">
         <input id="password" class="login__input" onchange="handleChange()" type="password" name="password" placeholder="Password">

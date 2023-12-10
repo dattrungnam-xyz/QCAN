@@ -40,6 +40,7 @@
     background-color: black;
     color: white;
     border-radius: 4px;
+    cursor: pointer;
 }
 .edit-profile__username
 {
@@ -50,7 +51,7 @@
     position:absolute;
     right: 0;
     top:-20px;
-
+    cursor: pointer;
     background: white;
     padding: 20px;
 }

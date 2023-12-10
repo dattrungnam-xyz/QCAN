@@ -103,7 +103,7 @@
                 <form style="" onsubmit="return handleSubmit()" method="post"
                       action="UserController?Action=ChangePassword&Id=<%=user.getId()%>" class="login">
             <span class="login__title">
-                Change Password
+                <h1>Change Password</h1>
             </span>
                     <input id="currentPassword" class="login__input" onchange="handleChange()" type="password"
                            name="currentPassword" placeholder="Current Password">
