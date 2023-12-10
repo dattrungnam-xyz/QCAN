@@ -1,5 +1,6 @@
 <%@ page import="com.example.qcan.model.bean.Post" %>
-<%@ page import="java.util.ArrayList" %><%--
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.qcan.model.bean.Account" %><%--
   Created by IntelliJ IDEA.
   User: ADMIN
   Date: 12/9/2023
@@ -29,7 +30,9 @@
 <body>
 <% ArrayList<Post> listPost = new ArrayList<>();
     listPost = (ArrayList<Post>) request.getAttribute("searchPostResult");
-
+    session = request.getSession();
+    Boolean isLogin = (Boolean) session.getAttribute("isLogin");
+    Account user = (Account) session.getAttribute("user");
 %>
 <div class="container">
     <header class="header">
@@ -83,8 +86,15 @@
                 <label class="header__menu--label" for="header__menu--toggle">
                     <i class="bx bx-menu-alt-right header__menu--button"></i>
                 </label>
-                <div class="header__menu--list">
-                    <div class="header__menu--item">Đăng xuất</div>
+                <div style="width: 200px!important;" class="header__menu--list">
+                    <%if(isLogin!= null && isLogin==true){%>
+                    <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="UserController?Action=ChangePassword">Change Password</a></div>
+
+                    <%if(user.getRole().equals("user")){%><div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="UserController?Action=RequestRole">Request Role Musician</a></div><%}%>
+                    <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="LogOutController">Logout</a></div>
+                    <%} else {%>
+                    <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="CheckLoginController">Login</a></div>
+                    <%}%>
                 </div>
             </div>
         </div>

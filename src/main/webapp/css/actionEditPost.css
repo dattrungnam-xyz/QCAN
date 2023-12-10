@@ -1,0 +1,32 @@
+#post__edit--toggle,
+.post__edit--list {
+    display: none;
+}
+
+#post__edit--toggle:checked ~ .post__edit--list {
+    display: block;
+    z-index: 1;
+}
+#post__edit--toggle:checked ~ .post__edit--label  i{
+    color: black;
+}
+
+.post__edit--list{
+    width:100px;
+
+    border-radius: 10px;
+    position: absolute;
+    border: 1px solid #ccc;
+    right: 0;
+    top: 100%;
+}
+.post__edit--item{
+    width: 100%;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px 0 10px 12px;
+}
+.post__main
+{
+    position: relative;
+}

@@ -79,9 +79,15 @@
                 <label class="header__menu--label" for="header__menu--toggle">
                     <i class="bx bx-menu-alt-right header__menu--button"></i>
                 </label>
-                <div class="header__menu--list">
-                    <a href="UserController?Action=ChangePassword" style="text-decoration: none; color: black" class="header__menu--item">Change Password</a>
-                    <a href="LogOutController" style="text-decoration: none; color: black" class="header__menu--item">Log out</a>
+                <div style="width: 200px!important; " class="header__menu--list">
+                    <%if(isLogin!= null && isLogin==true){%>
+                    <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="UserController?Action=ChangePassword">Change Password</a></div>
+
+                    <%if(user.getRole().equals("user")){%><div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="UserController?Action=RequestRole">Request Role Musician</a></div><%}%>
+                    <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="LogOutController">Logout</a></div>
+                    <%} else {%>
+                    <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="CheckLoginController">Login</a></div>
+                    <%}%>
 
                 </div>
             </div>

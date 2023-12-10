@@ -35,8 +35,9 @@ public class PostController extends HttpServlet {
         } else if (Action.equals("Update")) {
 
             viewFormUpdate(request, response);
-
-
+        } else if (Action.equals("Create"))
+        {
+            viewFormCreate(request, response);
         }
 
 

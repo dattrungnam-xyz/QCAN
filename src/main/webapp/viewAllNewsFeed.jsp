@@ -82,8 +82,15 @@
                 <label class="header__menu--label" for="header__menu--toggle">
                     <i class="bx bx-menu-alt-right header__menu--button"></i>
                 </label>
-                <div class="header__menu--list">
-                    <div class="header__menu--item">Đăng xuất</div>
+                <div style="width: 200px!important;" class="header__menu--list">
+                    <%if(isLogin!= null && isLogin==true){%>
+                    <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="UserController?Action=ChangePassword">Change Password</a></div>
+
+                    <%if(user.getRole().equals("user")){%><div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="UserController?Action=RequestRole">Request Role Musician</a></div><%}%>
+                    <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="LogOutController">Logout</a></div>
+                    <%} else {%>
+                    <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="CheckLoginController">Login</a></div>
+                    <%}%>
                 </div>
             </div>
         </div>
@@ -91,7 +98,7 @@
     <section class="main">
         <div class="main__content">
             <%if(isLogin!= null && isLogin == true && user.getNickname()!=null && user.getRole().equals("musician")){%>
-            <div class="main__post">
+            <a href="PostController" style="cursor: pointer;text-decoration: none" class="main__post">
                 <img
                         class="main__post--avatar"
                         src="<%=user.getAvatar()%>"
@@ -99,7 +106,7 @@
                 />
                 <button class="main__post--link">Bắt đầu đăng bài...</button>
                 <button class="main__post--button">Đăng</button>
-            </div>
+            </a>
             <%}%>
             <% for (Post post : listPost) { %>
             <div class="main__status">

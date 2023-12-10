@@ -40,7 +40,7 @@ public class CheckLoginController extends HttpServlet {
             session.setAttribute("user", user);
 
             request.setAttribute("user",user);
-            destination = "/indexTemp.jsp";
+            destination = "/index.jsp";
             RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
             rd.forward(request,response);
         }

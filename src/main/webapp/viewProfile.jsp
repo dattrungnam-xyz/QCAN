@@ -19,6 +19,7 @@
     <link rel="stylesheet" type="text/css" href="css/editProfile.css">
     <link rel="stylesheet" type="text/css" href="css/profile.css">
     <link rel="stylesheet" type="text/css" href="css/modal.css">
+    <link rel="stylesheet" type="text/css" href="css/actionEditPost.css">
     <link rel="stylesheet" type="text/css" href="css/global.css">
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -91,9 +92,15 @@
                 <label class="header__menu--label" for="header__menu--toggle">
                     <i class="bx bx-menu-alt-right header__menu--button"></i>
                 </label>
-                <div class="header__menu--list">
-                    <a href="UserController?Action=ChangePassword" style="text-decoration: none; color: black" class="header__menu--item">Change Password</a>
-                    <a href="LogOutController" style="text-decoration: none; color: black" class="header__menu--item">Log out</a>
+                <div style="width: 200px!important; " class="header__menu--list">
+                    <%if(isLogin!= null && isLogin==true){%>
+                    <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="UserController?Action=ChangePassword">Change Password</a></div>
+
+                    <%if(user.getRole().equals("user")){%><div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="UserController?Action=RequestRole">Request Role Musician</a></div><%}%>
+                    <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="LogOutController">Logout</a></div>
+                    <%} else {%>
+                    <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="CheckLoginController">Login</a></div>
+                    <%}%>
 
                 </div>
             </div>
@@ -175,9 +182,18 @@
                     <div class="main__status--header">
                         <a href="UserController?Id=<%=post.getIdUser()%>" style="text-decoration: none; color:black" class="main__status--username"><%=post.getFullname()%></a>
                         <div  style="text-decoration: none" class="main__status--time"><%=post.getPostTime()%></div>
-                        <!-- <div class="main__status--action">
-                          <i class="bx bx-dots-horizontal-rounded"></i>
-                        </div> -->
+                        <div style="cursor:pointer;" class="main__status--action post__main">
+
+
+
+                                <div class="post__edit--item"><a style="color: black; width: 100%;text-decoration: none" href="PostController?Action=Update&IdPost=<%=post.getIdPost()%>"><i class='bx bx-edit'></i></a></div>
+
+
+                        </div>
+
+
+
+
                     </div>
                     <div>
                         <div class="main__status--text">

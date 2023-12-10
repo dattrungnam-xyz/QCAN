@@ -36,6 +36,10 @@
 <body>
 
 <%
+    session = request.getSession();
+
+    Account currentUser = (Account) session.getAttribute("user");
+
     Account user = (Account) request.getAttribute("userOther");
     Follow isFl = (Follow) request.getAttribute("isFl");
 
@@ -45,7 +49,7 @@
     ArrayList<Account> listAccFler = (ArrayList<Account>) request.getAttribute("listAccFler");
     ArrayList<Account> listAccFled = (ArrayList<Account>) request.getAttribute("listAccFled");
     ArrayList<Post> listPost = (ArrayList<Post>) request.getAttribute("listPost");
-    session = request.getSession();
+
     Boolean isLogin = (Boolean) session.getAttribute("isLogin");
 
         if (user.getNickname() == null) {
@@ -112,8 +116,15 @@
                     <i class="bx bx-menu-alt-right header__menu--button"></i>
                 </label>
 
-                <div class="header__menu--list">
-                    <div class="header__menu--item">Đăng xuất</div>
+                <div style="width: 200px!important; " class="header__menu--list">
+                    <%if(isLogin!= null && isLogin==true){%>
+                    <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="UserController?Action=ChangePassword">Change Password</a></div>
+
+                    <%if(currentUser.getRole().equals("user")){%><div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="UserController?Action=RequestRole">Request Role Musician</a></div><%}%>
+                    <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="LogOutController">Logout</a></div>
+                    <%} else {%>
+                    <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="CheckLoginController">Login</a></div>
+                    <%}%>
                 </div>
             </div>
         </div>

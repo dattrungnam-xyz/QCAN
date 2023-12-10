@@ -30,7 +30,9 @@
 <body>
 <% ArrayList<Account> listUser = new ArrayList<>();
     listUser = (ArrayList<Account>) request.getAttribute("searchUserResult");
-
+    session = request.getSession();
+    Boolean isLogin = (Boolean) session.getAttribute("isLogin");
+    Account user = (Account) session.getAttribute("user");
 %>
 <div class="container">
     <header class="header">
@@ -84,8 +86,15 @@
                 <label class="header__menu--label" for="header__menu--toggle">
                     <i class="bx bx-menu-alt-right header__menu--button"></i>
                 </label>
-                <div class="header__menu--list">
-                    <div class="header__menu--item">Đăng xuất</div>
+                <div style="width: 200px!important;" class="header__menu--list">
+                    <%if(isLogin!= null && isLogin==true){%>
+                    <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="UserController?Action=ChangePassword">Change Password</a></div>
+
+                    <%if(user.getRole().equals("user")){%><div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="UserController?Action=RequestRole">Request Role Musician</a></div><%}%>
+                    <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="LogOutController">Logout</a></div>
+                    <%} else {%>
+                    <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="CheckLoginController">Login</a></div>
+                    <%}%>
                 </div>
             </div>
         </div>
@@ -132,14 +141,14 @@
             </div>
 
 
-            <% for (Account user : listUser) { %>
-            <a href="UserController?Id=<%=user.getId()%>" style="display:flex; gap:16px;margin-bottom:16px; border: 1px solid #ccc;border-radius: 12px;padding:12px;text-decoration: none;color: black" >
+            <% for (Account us : listUser) { %>
+            <a href="UserController?Id=<%=us.getId()%>" style="display:flex; gap:16px;margin-bottom:16px; border: 1px solid #ccc;border-radius: 12px;padding:12px;text-decoration: none;color: black" >
                 <div style="width: 44px; height: 44px; border-radius:50%;overflow:hidden;">
-                    <img style="width: 100%;height: 100%" src="<%=user.getAvatar()%>" alt="">
+                    <img style="width: 100%;height: 100%" src="<%=us.getAvatar()%>" alt="">
                 </div>
                 <div style="display:flex; flex-direction:column;justify-content: space-evenly;">
-                    <span style="font-size:14px;font-weight: bold;"><%=user.getFullname()%></span>
-                    <span style="font-size:13px;font-weight: bold; color:#737373"><%=user.getNickname()%></span>
+                    <span style="font-size:14px;font-weight: bold;"><%=us.getFullname()%></span>
+                    <span style="font-size:13px;font-weight: bold; color:#737373"><%=us.getNickname()%></span>
                 </div>
             </a>
             <%}%>
