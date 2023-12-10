@@ -97,8 +97,8 @@
                         src="<%=user.getAvatar()%>"
                         alt=""
                 />
-                <button class="main__post--link">Bắt đầu đăng bài...</button>
-                <button class="main__post--button">Đăng</button>
+                <button class="main__post--link">Post video music...</button>
+                <button class="main__post--button">Post</button>
             </a>
             <%}%>
             <% for (Post post : listPost) { %>
@@ -123,9 +123,9 @@
                     </div>
                     <div>
                         <div class="main__status--text">
-                            Song Name: <%=post.getSongName()%> <br>
-                            Song Type: <%=post.getSongType()%> <br>
-                            Musician: <%=post.getMusician()%> <br>
+                            <strong> Song Name: </strong> <%=post.getSongName()%> <br>
+                            <strong> Song Type:</strong> <%=post.getSongType()%> <br>
+                            <strong> Musician:</strong> <%=post.getMusician()%> <br><br>
                             <%=post.getPostContent()%>
                         </div>
                         <div class="main__status--image-contain">

@@ -129,9 +129,9 @@
             <div class="user__social">
                 <div class="user__social--follow">
                     <span style="cursor: pointer" onclick="toggleFollower()"
-                          class="user__social--follow-infor"> <%=countFler.getCountFollower()%> người theo dõi </span>
+                          class="user__social--follow-infor"> <%=countFler.getCountFollower()%> followers </span>
                     <span style="cursor: pointer" onclick="toggleFollowed()" class="user__social--follow-infor">
-                Đang theo dõi <%=countFl.getCountFollow()%> người dùng
+                 <%=countFl.getCountFollow()%> following
               </span>
                 </div>
                 <div class="user__social--link">
@@ -154,7 +154,7 @@
             <div class="profile__edit">
                 <button class="profile__edit--button">
                     <a style="color:black; text-decoration: none;" href="UserController?Action=Update">
-                        Chỉnh sửa trang cá nhân
+                        Edit profile
                     </a>
 
                 </button>
@@ -162,7 +162,7 @@
 
             <div class="profile__status">
                 <div class="profile__status--header  profile__status--header-active">
-                    Bài đăng
+                   Posts
                 </div>
 
             </div>
@@ -197,9 +197,9 @@
                     </div>
                     <div>
                         <div class="main__status--text">
-                            Song Name: <%=post.getSongName()%> <br>
-                            Song Type: <%=post.getSongType()%> <br>
-                            Musician: <%=post.getMusician()%> <br>
+                            <strong> Song Name: </strong> <%=post.getSongName()%> <br>
+                            <strong> Song Type:</strong> <%=post.getSongType()%> <br>
+                            <strong> Musician:</strong> <%=post.getMusician()%> <br><br>
                             <%=post.getPostContent()%>
                         </div>
                         <div class="main__status--image-contain">
@@ -223,7 +223,7 @@
 <div onclick="toggleFollowed()" class="modal modal1 hidden"></div>
 <div class="fled followed-content hidden">
     <div class="followed-header">
-        <span>Đang theo dõi</span>
+        <span>Following</span>
         <div onclick="
         toggleFollowed()" class="followed-header__close">
             <i class="bx bx-x followed-header__close--icon"></i>
@@ -248,7 +248,7 @@
 <div onclick="toggleFollower()" class="modal modal2 hidden"></div>
 <div class="fler followed-content hidden">
     <div class="followed-header">
-        <span>Người theo dõi</span>
+        <span>Followers</span>
         <div onclick="
         toggleFollower()" class="followed-header__close">
             <i class="bx bx-x followed-header__close--icon"></i>
