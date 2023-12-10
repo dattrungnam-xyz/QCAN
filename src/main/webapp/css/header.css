@@ -120,6 +120,7 @@
 }
 .header__menu--item a
 {
+    display: block;
     padding: 10px 12px 10px 12px;
 }
 @media screen and (max-width: 800px) {
