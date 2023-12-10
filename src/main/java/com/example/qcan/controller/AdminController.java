@@ -13,8 +13,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/UserManagementServlet")
-public class UserManagementServlet extends HttpServlet {
+@WebServlet("/AdminController")
+public class AdminController extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -30,7 +30,6 @@ public class UserManagementServlet extends HttpServlet {
             case "Admin_view_posts":
                 viewAllPosts(request, response);
                 break;
-
             default:
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 break;
@@ -45,8 +44,11 @@ public class UserManagementServlet extends HttpServlet {
         }
 
         switch (action) {
-            case "delete":
+            case "bnt_delete":
                 deleteUser(request, response);
+                break;
+            case "bnt_reopen":
+                reopenUser(request, response);
                 break;
             case "Admin_delete_post":
                 deletePost(request, response);
@@ -70,6 +72,12 @@ public class UserManagementServlet extends HttpServlet {
         boolean deleted = userBO.deleteUserById(userId);
         response.sendRedirect("AdminHome.jsp");
     }
+    private void reopenUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        UserBO userBO = new UserBO();
+        boolean reopen = userBO.reopenUserById(userId);
+        response.sendRedirect("AdminHome.jsp");
+    }
     private void viewAllPosts(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PostBO postBO = new PostBO();
         List<Post> postList = postBO.getAllPosts();
@@ -80,6 +88,6 @@ public class UserManagementServlet extends HttpServlet {
         int postId = Integer.parseInt(request.getParameter("postId"));
         PostBO postBO = new PostBO();
         postBO.deletePost(postId);
-        response.sendRedirect("/AdminHome.jsp");
+        response.sendRedirect("/ViewAllPosts.jsp");
     }
 }

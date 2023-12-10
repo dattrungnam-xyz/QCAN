@@ -44,4 +44,8 @@ public class UserBO {
     public boolean deleteUserById(int userId) {
         return userDAO.deleteUserById(userId);
     }
+    public boolean reopenUserById(int userId) {
+        return userDAO.reopenUserById(userId);
+    }
+
 }

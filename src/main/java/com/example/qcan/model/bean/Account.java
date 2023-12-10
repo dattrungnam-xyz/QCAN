@@ -13,6 +13,9 @@ public class Account {
     private String Role;
     private String LinkFB;
     private String LinkIns;
+    private boolean isRemove;
+
+
 
     public void setId(int id) {
         Id = id;
@@ -65,6 +68,9 @@ public class Account {
     public String getRole() {
         return Role;
     }
+    public boolean getisRemove() {  return isRemove;
+    }
+
 
     public void setAvatar(String avatar) {
         Avatar = avatar;
@@ -101,4 +107,8 @@ public class Account {
     public String getEmail() {
         return Email;
     }
+    public void setRemove(boolean remove) {
+        isRemove = remove;
+    }
+
 }

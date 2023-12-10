@@ -50,6 +50,7 @@ public class UserDAO {
                 user.setLinkFB(resultSet.getString("linkfb"));
                 user.setLinkIns(resultSet.getString("linkins"));
                 user.setEmail(resultSet.getString("email"));
+                user.setRemove(resultSet.getBoolean("isRemove"));
             }
             //    System.out.println(user);
             return user;
@@ -79,6 +80,7 @@ public class UserDAO {
                 user.setLinkFB(resultSet.getString("linkfb"));
                 user.setLinkIns(resultSet.getString("linkins"));
                 user.setEmail(resultSet.getString("email"));
+                user.setRemove(resultSet.getBoolean("isRemove"));
                 userList.add(user);
             }
             return userList;
@@ -188,7 +190,23 @@ public class UserDAO {
     public boolean deleteUserById(int userId) {
         try {
             Connection connection = ConnectDB.getConnection();
-            String sql = "DELETE FROM account WHERE id = ?";
+            String sql = "UPDATE account SET isRemove = true WHERE id = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
+
+            int affectedRows = preparedStatement.executeUpdate();
+
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    // Xóa người dùng theo ID
+    public boolean reopenUserById(int userId) {
+        try {
+            Connection connection = ConnectDB.getConnection();
+            String sql = "UPDATE account SET isRemove = false WHERE id = ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, userId);

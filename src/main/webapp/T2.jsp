@@ -33,10 +33,10 @@
         <th>Actions</th>
     </tr>
     <tr>
-        <td><a href="UserManagementServlet?action=Admin_delete_user"  target="khung3">Quản lý người dùng</a></td>
+        <td><a href="AdminController?action=Admin_delete_user"  target="khung3">Quản lý người dùng</a></td>
     </tr>
     <tr>
-        <td><a href="UserManagementServlet?action=Admin_view_posts"  target="khung3">Quản lý bài viết (Xóa bài viết)</a></td>
+        <td><a href="AdminController?action=Admin_view_posts" target="khung3">Quản lý bài viết (Xóa bài viết)</a></td>
     </tr>
     <tr>
 
