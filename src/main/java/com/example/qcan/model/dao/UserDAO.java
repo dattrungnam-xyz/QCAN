@@ -62,7 +62,7 @@ public class UserDAO {
     public List<Account> getAllUsers() {
         try {
             Connection connection = ConnectDB.getConnection();
-            String sql = "SELECT * FROM account WHERE role = 'user'";
+            String sql = "SELECT * FROM account WHERE role = 'user' or role = 'musician'";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
 
@@ -81,6 +81,7 @@ public class UserDAO {
                 user.setLinkIns(resultSet.getString("linkins"));
                 user.setEmail(resultSet.getString("email"));
                 user.setRemove(resultSet.getBoolean("isRemove"));
+                user.setRequestRole(resultSet.getBoolean("requestRole"));
                 userList.add(user);
             }
             return userList;
@@ -117,6 +118,36 @@ public class UserDAO {
 
             int affectedRows = preparedStatement.executeUpdate();
 
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+// Phê duyệt để đăng bài
+    public boolean approveUser (int userId) {
+        try {
+            Connection connection = ConnectDB.getConnection();
+            String sql = "UPDATE account SET role = 'musician', requestRole = 0 WHERE id = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
+
+            int affectedRows = preparedStatement.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    // Không duyệt để đăng bài
+    public boolean unapproveUser (int userId) {
+        try {
+            Connection connection = ConnectDB.getConnection();
+            String sql = "UPDATE account SET requestRole = 0 WHERE id = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
+
+            int affectedRows = preparedStatement.executeUpdate();
             return affectedRows > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);

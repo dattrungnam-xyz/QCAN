@@ -50,6 +50,7 @@ public class UserBO {
     {
         userDAO.requestRole(id );
     }
-
+    public boolean approveUser(int id){return userDAO.approveUser(id);}
+    public boolean unapproveUser(int id){return userDAO.unapproveUser(id);}
 
 }

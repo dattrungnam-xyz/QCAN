@@ -14,6 +14,17 @@ public class Account {
     private String LinkFB;
     private String LinkIns;
     private boolean isRemove;
+    public boolean requestRole;
+
+    public boolean getRequestRole() {
+        return requestRole;
+    }
+
+    public void setRequestRole(boolean requestRole) {
+        this.requestRole = requestRole;
+    }
+
+
 
 
 

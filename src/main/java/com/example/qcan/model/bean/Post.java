@@ -12,7 +12,6 @@ public class Post {
     private String Musician;
     private String PostContent;
     private String VideoUrl;
-
     private int CountLike;
     private String Fullname;
     private String Nickname;

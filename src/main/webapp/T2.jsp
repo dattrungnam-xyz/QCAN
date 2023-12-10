@@ -39,7 +39,7 @@
         <td><a href="AdminController?action=Admin_view_posts" target="khung3">Quản lý bài viết (Xóa bài viết)</a></td>
     </tr>
     <tr>
-
+        <td><a href="AdminController?action=Admin_approve_posts" target="khung3">Quản lý bài viết ( Phê duyệt đăng bài)</a></td>
     </tr>
 </table>
 
