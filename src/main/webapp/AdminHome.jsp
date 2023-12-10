@@ -18,7 +18,7 @@
         .khung1{
             width: 100%;
         }
-        .khung2,.khung4{
+        .khung2{
             width: 20%;
         }
         .khung3{

@@ -15,7 +15,7 @@
         }
 
         h2 {
-            color: #007bff;
+            color:  #737373;
         }
 
         table {
@@ -31,7 +31,7 @@
         }
 
         th {
-            background-color: #007bff;
+            background-color: #737373;
             color: white;
         }
 
@@ -79,6 +79,7 @@
         <th>LinkFB</th>
         <th>LinkIns</th>
         <th>IsRemove</th>
+        <th>Approve</th>
         <th>Actions</th>
     </tr>
 
@@ -98,16 +99,17 @@
         <td><%= StringUtils.defaultString(user.getLinkFB(), "") %></td>
         <td><%= StringUtils.defaultString(user.getLinkIns(), "") %></td>
         <td><%= user.getisRemove() %></td>
+        <td><%= user.getRequestRole() %></td>
         <td>
             <div class="button-container">
-                <!-- Nút Xóa -->
+                <!-- Nút xxóa -->
                 <form action="AdminController" method="post">
                     <input type="hidden" name="action" value="bnt_delete">
                     <input type="hidden" name="userId" value="<%=user.getId() %>">
                     <button type="submit" class="delete-button">Xóa</button>
                 </form>
 
-                <!-- Nút Mở lại -->
+                <!-- Nút mở lại -->
                 <form action="AdminController" method="post">
                     <input type="hidden" name="action" value="bnt_reopen">
                     <input type="hidden" name="userId" value="<%=user.getId() %>">

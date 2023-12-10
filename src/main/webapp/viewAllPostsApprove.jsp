@@ -15,7 +15,7 @@
     }
 
     h2 {
-      color: #007bff;
+      color:  #737373;
     }
 
     table {
@@ -31,7 +31,7 @@
     }
 
     th {
-      background-color: #007bff;
+      background-color: #737373;
       color: white;
     }
 
