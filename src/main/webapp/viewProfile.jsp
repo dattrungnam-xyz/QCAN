@@ -187,7 +187,7 @@
 
 
                                 <div class="post__edit--item"><a style="color: black; width: 100%;text-decoration: none" href="PostController?Action=Update&IdPost=<%=post.getIdPost()%>"><i class='bx bx-edit'></i></a></div>
-
+                            <div class="post__edit--item"><a style="color: black; width: 100%;text-decoration: none" href="PostController?Action=Delete&IdPost=<%=post.getIdPost()%>"><i class='bx bx-trash'></i></a></div>
 
                         </div>
 

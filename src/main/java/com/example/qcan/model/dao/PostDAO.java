@@ -55,6 +55,23 @@ public class PostDAO {
             throw new RuntimeException(e);
         }
     }
+    public void deletePost(int IdPost)
+    {
+        try {
+            Connection connection = ConnectDB.getConnection();
+            String sql = "DELETE FROM post WHERE IdPost = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setInt(1,IdPost);
+
+
+            int affectedRows = preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public Post getPostByIdPost(int IdPost)
     {
         Post post = new Post();
@@ -94,7 +111,7 @@ public class PostDAO {
         return post;
     }
 
-    public boolean checkPermissionUpdate(int IdPost,int IdUser)
+    public boolean checkPermission(int IdPost,int IdUser)
     {
         try {
             Connection connection = ConnectDB.getConnection();

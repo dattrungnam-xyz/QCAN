@@ -19,9 +19,13 @@ public class PostBO {
     {
         return postDAO.getPostByIdPost(idPost);
     }
-    public boolean checkPermissionUpdate(int IdPost,int IdUser)
+    public boolean checkPermission(int IdPost,int IdUser)
     {
-        return postDAO.checkPermissionUpdate(IdPost,IdUser);
+        return postDAO.checkPermission(IdPost,IdUser);
+    }
+    public void deletePost(int IdPost)
+    {
+        postDAO.deletePost(IdPost);
     }
 
     public ArrayList<Post> getListPostByIdFler(int idFler){
