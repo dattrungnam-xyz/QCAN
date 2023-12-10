@@ -96,7 +96,7 @@
                     <%if(isLogin!= null && isLogin==true){%>
                     <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="UserController?Action=ChangePassword">Change Password</a></div>
 
-                    <%if(user.getRole().equals("user")){%><div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="UserController?Action=RequestRole">Request Role Musician</a></div><%}%>
+                    <%if(user!=null && user.getRole().equals("user")){%><div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="UserController?Action=RequestRole">Request Role Musician</a></div><%}%>
                     <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="LogOutController">Logout</a></div>
                     <%} else {%>
                     <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="CheckLoginController">Login</a></div>
@@ -110,7 +110,7 @@
         <div class="main__content">
             <div class="user__infor">
                 <div class="user__infor--account">
-                    <span class="user__name"> <%=user.getFullname()%></span>
+                    <span class="user__name"> <%=user.getFullname()%> <%if(user.getRole().equals("musician"))%><i class='bx bx-music' ></i><%%></span>
                     <span class="user__username"> @<%=user.getNickname()%></span>
                 </div>
                 <div class="user__avatar">
@@ -129,9 +129,9 @@
             <div class="user__social">
                 <div class="user__social--follow">
                     <span style="cursor: pointer" onclick="toggleFollower()"
-                          class="user__social--follow-infor"> <%=countFler.getCountFollower()%> người theo dõi </span>
+                          class="user__social--follow-infor"> <%=countFler.getCountFollower()%> followers </span>
                     <span style="cursor: pointer" onclick="toggleFollowed()" class="user__social--follow-infor">
-                Đang theo dõi <%=countFl.getCountFollow()%> người dùng
+                 <%=countFl.getCountFollow()%> following
               </span>
                 </div>
                 <div class="user__social--link">
@@ -154,7 +154,7 @@
             <div class="profile__edit">
                 <button class="profile__edit--button">
                     <a style="color:black; text-decoration: none;" href="UserController?Action=Update">
-                        Chỉnh sửa trang cá nhân
+                        Edit profile
                     </a>
 
                 </button>
@@ -162,7 +162,7 @@
 
             <div class="profile__status">
                 <div class="profile__status--header  profile__status--header-active">
-                    Bài đăng
+                    Posts
                 </div>
 
             </div>
@@ -186,8 +186,8 @@
 
 
 
-                                <div class="post__edit--item"><a style="color: black; width: 100%;text-decoration: none" href="PostController?Action=Update&IdPost=<%=post.getIdPost()%>"><i class='bx bx-edit'></i></a></div>
-
+                            <div class="post__edit--item"><a style="color: black; width: 100%;text-decoration: none" href="PostController?Action=Update&IdPost=<%=post.getIdPost()%>"><i class='bx bx-edit'></i></a></div>
+                            <div class="post__edit--item"><a style="color: black; width: 100%;text-decoration: none" href="PostController?Action=Delete&IdPost=<%=post.getIdPost()%>"><i class='bx bx-trash'></i></a></div>
 
                         </div>
 
@@ -197,9 +197,9 @@
                     </div>
                     <div>
                         <div class="main__status--text">
-                            Song Name: <%=post.getSongName()%> <br>
-                            Song Type: <%=post.getSongType()%> <br>
-                            Musician: <%=post.getMusician()%> <br>
+                            <strong> Song Name: </strong> <%=post.getSongName()%> <br>
+                            <strong> Song Type:</strong> <%=post.getSongType()%> <br>
+                            <strong> Musician:</strong> <%=post.getMusician()%> <br><br>
                             <%=post.getPostContent()%>
                         </div>
                         <div class="main__status--image-contain">
@@ -223,7 +223,7 @@
 <div onclick="toggleFollowed()" class="modal modal1 hidden"></div>
 <div class="fled followed-content hidden">
     <div class="followed-header">
-        <span>Đang theo dõi</span>
+        <span>Following</span>
         <div onclick="
         toggleFollowed()" class="followed-header__close">
             <i class="bx bx-x followed-header__close--icon"></i>
@@ -231,7 +231,7 @@
     </div>
     <div class="followed-list-user">
         <% for (Account fl : listAccFled) { %>
-        <div class="followed-user">
+        <a style="text-decoration: none" href="UserController?Id=<%=fl.getId()%>" class="followed-user">
             <div class="followed-user__avatar">
                 <img src="<%=fl.getAvatar()%>" alt="">
             </div>
@@ -239,7 +239,7 @@
                 <span style="font-size:14px;font-weight: bold;"><%=fl.getFullname()%></span>
                 <span style="font-size:13px;font-weight: bold; color:#737373"><%=fl.getNickname()%></span>
             </div>
-        </div>
+        </a>
         <%}%>
 
     </div>
@@ -248,7 +248,7 @@
 <div onclick="toggleFollower()" class="modal modal2 hidden"></div>
 <div class="fler followed-content hidden">
     <div class="followed-header">
-        <span>Người theo dõi</span>
+        <span>Followers</span>
         <div onclick="
         toggleFollower()" class="followed-header__close">
             <i class="bx bx-x followed-header__close--icon"></i>
@@ -256,7 +256,7 @@
     </div>
     <div class="followed-list-user">
         <% for (Account fl : listAccFler) { %>
-        <div class="followed-user">
+        <a style="text-decoration: none" href="UserController?Id=<%=fl.getId()%>" class="followed-user">
             <div class="followed-user__avatar">
                 <img src="<%=fl.getAvatar()%>" alt="">
             </div>
@@ -264,7 +264,7 @@
                 <span style="font-size:14px;font-weight: bold;"><%=fl.getFullname()%></span>
                 <span style="font-size:13px;font-weight: bold; color:#737373"><%=fl.getNickname()%></span>
             </div>
-        </div>
+        </a>
         <%}%>
 
     </div>

@@ -3,6 +3,8 @@ package com.example.qcan.model.bo;
 import com.example.qcan.model.bean.Account;
 import com.example.qcan.model.dao.UserDAO;
 
+import java.util.List;
+
 public class UserBO {
     UserDAO userDAO = new UserDAO();
     public Account getAccount(String Username)
@@ -33,5 +35,21 @@ public class UserBO {
     {
         userDAO.requestRole(id );
     }
-
+    public List<Account> getAllUsers() {
+        try {
+            return userDAO.getAllUsers();
+        } catch (Exception e) {
+            // Xử lý ngoại lệ, có thể log và/hoặc thông báo lỗi
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public boolean deleteUserById(int userId) {
+        return userDAO.deleteUserById(userId);
+    }
+    public boolean reopenUserById(int userId) {
+        return userDAO.reopenUserById(userId);
+    }
+    public boolean approveUser(int id){return userDAO.approveUser(id);}
+    public boolean unapproveUser(int id){return userDAO.unapproveUser(id);}
 }

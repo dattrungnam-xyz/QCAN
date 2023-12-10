@@ -39,6 +39,10 @@ public class PostController extends HttpServlet {
         {
             viewFormCreate(request, response);
         }
+        else if (Action.equals("Delete"))
+        {
+            viewFormDelete(request, response);
+        }
 
 
     }
@@ -49,6 +53,9 @@ public class PostController extends HttpServlet {
             createPost(request, response);
         } else if (Action.equals("Update")) {
             updatePost(request, response);
+        }
+        else if (Action.equals("Delete")) {
+            deletePost(request, response);
         }
 
 
@@ -116,7 +123,7 @@ public class PostController extends HttpServlet {
         int idUser = (int) session.getAttribute("id");
         PostBO postBO = new PostBO();
 
-        if(IdPost != null && postBO.checkPermissionUpdate(Integer.parseInt(IdPost),idUser) )
+        if(IdPost != null && postBO.checkPermission(Integer.parseInt(IdPost),idUser) )
         {
             Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
                     "cloud_name", "drao7atge",
@@ -155,40 +162,104 @@ public class PostController extends HttpServlet {
             String destination = null;
             //redirect sang no permission
 
-            destination = "/PostController?Action=Update&IdPost="+IdPost+"&message=Update post success!";
+            destination = "/noPermission.jsp";
             response.sendRedirect(request.getContextPath() + destination);
         }
-
-
 
     }
     private void viewFormCreate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String destination = "/postStatus.jsp";
         HttpSession session = request.getSession();
-        UserBO userBO = new UserBO();
-        String username = (String) session.getAttribute("username");
-        Account user = userBO.getAccount(username);
+        Account user = (Account) session.getAttribute("user");
         request.setAttribute("user", user);
-
+        if(user.getRole().equals("musician"))
+        {
+            destination = "/postStatus.jsp";
+        }
+        else {
+            destination = "/noPermission.jsp";
+        }
         RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
         rd.forward(request, response);
     }
 
     private void viewFormUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String IdPost = (String) request.getParameter("IdPost");
+
         if (IdPost != null) {
             PostBO postBO = new PostBO();
             Post post = postBO.getPostByIdPost(Integer.parseInt(IdPost));
-            String destination = "/formUpdatePost.jsp";
-
             HttpSession session = request.getSession();
-            UserBO userBO = new UserBO();
-            String username = (String) session.getAttribute("username");
-            Account user = userBO.getAccount(username);
-            request.setAttribute("user", user);
-            request.setAttribute("post", post);
+            Account user = (Account)session.getAttribute("user");
+            String destination = null;
+            if(post.getIdUser() == user.getId())
+            {
+                destination = "/formUpdatePost.jsp";
+
+                request.setAttribute("user", user);
+                request.setAttribute("post", post);
+            }
+            else
+            {
+                request.setAttribute("user", user);
+                destination = "/noPermission.jsp";
+            }
+
             RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
             rd.forward(request, response);
+        }
+
+    }
+    private void viewFormDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String IdPost = (String) request.getParameter("IdPost");
+
+        if (IdPost != null) {
+            PostBO postBO = new PostBO();
+            Post post = postBO.getPostByIdPost(Integer.parseInt(IdPost));
+            HttpSession session = request.getSession();
+            Account user = (Account)session.getAttribute("user");
+            String destination = null;
+            if(post.getIdUser() == user.getId())
+            {
+                destination = "/formDeletePost.jsp";
+
+                request.setAttribute("user", user);
+                request.setAttribute("post", post);
+            }
+            else
+            {
+                request.setAttribute("user", user);
+                destination = "/noPermission.jsp";
+            }
+
+            RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
+            rd.forward(request, response);
+        }
+
+    }
+    private void deletePost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Post post = new Post();
+
+        String IdPost = (String) request.getParameter("IdPost");
+        HttpSession session = request.getSession();
+        int idUser = (int) session.getAttribute("id");
+        PostBO postBO = new PostBO();
+
+        if(IdPost != null && postBO.checkPermission(Integer.parseInt(IdPost),idUser) )
+        {
+            postBO.deletePost(Integer.parseInt(IdPost));
+            String destination = null;
+            destination = "/UserController";
+            response.sendRedirect(request.getContextPath() + destination);
+        }
+        else {
+            String destination = null;
+            //redirect sang no permission
+
+            destination = "/noPermission.jsp";
+            response.sendRedirect(request.getContextPath() + destination);
         }
 
     }

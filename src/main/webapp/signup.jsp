@@ -32,7 +32,7 @@
 <section class="login__container">
     <form onsubmit="return handleSubmit()" method="post" action="SignUpController" class="login">
             <span class="login__title">
-               Sign up
+               <h1>Sign Up</h1>
             </span>
         <input class="login__input" onchange="handleChange()" id="username" name="username" type="text" placeholder="Username">
         <input class="login__input" onchange="handleChange()" id="password" name="password" type="password" placeholder="Password">
@@ -44,7 +44,7 @@
         <span class="login__navigate">Already a member? <a href="">Log in now</a></span>
     </form>
 </section>
-    <script>
+<script>
     let username = document.querySelector("#username")
     let password = document.querySelector("#password")
     let email = document.querySelector("#email")
@@ -90,7 +90,7 @@
         p_text_error.innerHTML = ""
     }
 
-    </script>
+</script>
 <%
     }
 %>

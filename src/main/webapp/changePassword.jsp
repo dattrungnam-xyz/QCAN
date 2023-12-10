@@ -85,7 +85,7 @@
                     <%if(isLogin!= null && isLogin==true){%>
                     <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="UserController?Action=ChangePassword">Change Password</a></div>
 
-                    <%if(user.getRole().equals("user")){%><div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="UserController?Action=RequestRole">Request Role Musician</a></div><%}%>
+                    <%if(user!=null && user.getRole().equals("user")){%><div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="UserController?Action=RequestRole">Request Role Musician</a></div><%}%>
                     <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="LogOutController">Logout</a></div>
                     <%} else {%>
                     <div class="header__menu--item"><a style="color: black; width: 100%;text-decoration: none" href="CheckLoginController">Login</a></div>
@@ -103,7 +103,7 @@
                 <form style="" onsubmit="return handleSubmit()" method="post"
                       action="UserController?Action=ChangePassword&Id=<%=user.getId()%>" class="login">
             <span class="login__title">
-                Change Password
+                <h1>Change Password</h1>
             </span>
                     <input id="currentPassword" class="login__input" onchange="handleChange()" type="password"
                            name="currentPassword" placeholder="Current Password">

@@ -2,10 +2,9 @@ package com.example.qcan.model.dao;
 
 import com.example.qcan.model.bean.Account;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO {
     public boolean isValid(int Id,String field, String value) {
@@ -56,6 +55,101 @@ public class UserDAO {
                 user.setEmail(resultSet.getString("email"));
             }
             return user;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Account> getAllUsers() {
+        try {
+            Connection connection = ConnectDB.getConnection();
+            String sql = "SELECT * FROM account WHERE role = 'user' or role = 'musician'";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            List<Account> userList = new ArrayList<>();
+
+            while (resultSet.next()) {
+                Account user = new Account();
+                user.setId(resultSet.getInt("id"));
+                user.setUsername(resultSet.getString("username"));
+                user.setFullname(resultSet.getString("fullname"));
+                user.setNickname(resultSet.getString("nickname"));
+                user.setBio(resultSet.getString("bio"));
+                user.setAvatar(resultSet.getString("avatar"));
+                user.setRole(resultSet.getString("role"));
+                user.setLinkFB(resultSet.getString("linkfb"));
+                user.setLinkIns(resultSet.getString("linkins"));
+                user.setEmail(resultSet.getString("email"));
+                user.setRemove(resultSet.getBoolean("isRemove"));
+                user.setRequestRole(resultSet.getBoolean("requestRole"));
+                userList.add(user);
+            }
+            return userList;
+        } catch (SQLException e) {
+            // Xử lý ngoại lệ, có thể log và/hoặc thông báo lỗi
+            e.printStackTrace();
+            return null;
+        }
+    }
+    // Xóa người dùng theo ID
+    public boolean deleteUserById(int userId) {
+        try {
+            Connection connection = ConnectDB.getConnection();
+            String sql = "UPDATE account SET isRemove = true WHERE id = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
+
+            int affectedRows = preparedStatement.executeUpdate();
+
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    // Mở người dùng theo ID
+    public boolean reopenUserById(int userId) {
+        try {
+            Connection connection = ConnectDB.getConnection();
+            String sql = "UPDATE account SET isRemove = false WHERE id = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
+
+            int affectedRows = preparedStatement.executeUpdate();
+
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    // Phê duyệt để đăng bài
+    public boolean approveUser (int userId) {
+        try {
+            Connection connection = ConnectDB.getConnection();
+            String sql = "UPDATE account SET role = 'musician', requestRole = 0 WHERE id = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
+
+            int affectedRows = preparedStatement.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    // Không duyệt để đăng bài
+    public boolean unapproveUser (int userId) {
+        try {
+            Connection connection = ConnectDB.getConnection();
+            String sql = "UPDATE account SET requestRole = 0 WHERE id = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
+
+            int affectedRows = preparedStatement.executeUpdate();
+            return affectedRows > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

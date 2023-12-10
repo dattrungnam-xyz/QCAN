@@ -19,39 +19,40 @@ public class CheckLoginController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String destination = "/login.jsp";
         RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
-        rd.forward(request,response);
+        rd.forward(request, response);
     }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String destination = null;
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+
         CheckLoginBO checkLoginBo = new CheckLoginBO();
         UserBO userBO = new UserBO();
-        Boolean isValidUser = null;
+        boolean isValidUser = checkLoginBo.isValidUser(username, password);
 
-        isValidUser = checkLoginBo.isValidUser(username,password);
-        if(isValidUser)
-        {
+        if (isValidUser) {
             Account user = userBO.getAccount(username);
             HttpSession session = request.getSession();
             session.setAttribute("isLogin", true);
             session.setAttribute("id", user.getId());
             session.setAttribute("username", user.getUsername());
             session.setAttribute("user", user);
+            // Set an attribute to indicate if the user is an admin
+            if ("Admin".equals(user.getRole())) {
+                session.setAttribute("Admin", true);
+                response.sendRedirect("AdminHome.jsp");
+                return; // Add return to exit the method after redirection
+            } else {
+                request.setAttribute("user", user);
+                String destination = "/NewsFeedController";
+//                RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
+//                rd.forward(request, response);
+                response.sendRedirect(request.getContextPath()+destination);
 
-            request.setAttribute("user",user);
-            destination = "/index.jsp";
-            RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
-            rd.forward(request,response);
-        }
-        else
-        {
-            destination = "/CheckLoginController?error=Username or password is incorrect!";
+            }
+        } else {
+            String destination = "/CheckLoginController?error=Username or password is incorrect!";
             response.sendRedirect(request.getContextPath() + destination);
-//            RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
-//            rd.forward(request,response);
         }
-
     }
-
 }

@@ -13,6 +13,8 @@ public class Account {
     private String Role;
     private String LinkFB;
     private String LinkIns;
+    private boolean isRemove;
+    public boolean requestRole;
 
     public void setId(int id) {
         Id = id;
@@ -101,4 +103,18 @@ public class Account {
     public String getEmail() {
         return Email;
     }
+    public boolean getRequestRole() {
+        return requestRole;
+    }
+
+    public void setRequestRole(boolean requestRole) {
+        this.requestRole = requestRole;
+    }
+    public boolean getisRemove() {  return isRemove;
+    }
+    public void setRemove(boolean remove) {
+        isRemove = remove;
+    }
+
+
 }

@@ -117,9 +117,12 @@
     width: 100%;
     font-size: 15px;
     font-weight: bold;
-    padding: 10px 0 10px 12px;
 }
-
+.header__menu--item a
+{
+    display: block;
+    padding: 10px 12px 10px 12px;
+}
 @media screen and (max-width: 800px) {
     .header {
         height: 64px;
