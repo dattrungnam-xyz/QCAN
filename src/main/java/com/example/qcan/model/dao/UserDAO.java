@@ -35,8 +35,11 @@ public class UserDAO {
         try {
             Connection connection = ConnectDB.getConnection();
             String sql = "SELECT * FROM account where username = ?";
+
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, Username);
+
+
             ResultSet resultSet = preparedStatement.executeQuery();
             Account user = new Account();
             while (resultSet.next()) {
@@ -50,11 +53,8 @@ public class UserDAO {
                 user.setLinkFB(resultSet.getString("linkfb"));
                 user.setLinkIns(resultSet.getString("linkins"));
                 user.setEmail(resultSet.getString("email"));
-                user.setRemove(resultSet.getBoolean("isRemove"));
             }
-            //    System.out.println(user);
             return user;
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -90,8 +90,38 @@ public class UserDAO {
             return null;
         }
     }
+    // Xóa người dùng theo ID
+    public boolean deleteUserById(int userId) {
+        try {
+            Connection connection = ConnectDB.getConnection();
+            String sql = "UPDATE account SET isRemove = true WHERE id = ?";
 
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
 
+            int affectedRows = preparedStatement.executeUpdate();
+
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    // Mở người dùng theo ID
+    public boolean reopenUserById(int userId) {
+        try {
+            Connection connection = ConnectDB.getConnection();
+            String sql = "UPDATE account SET isRemove = false WHERE id = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
+
+            int affectedRows = preparedStatement.executeUpdate();
+
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public Account getAccountById(int id){
         Connection connection = null;
@@ -186,38 +216,6 @@ public class UserDAO {
             throw new RuntimeException(e);
         }
     }
-    // Xóa người dùng theo ID
-    public boolean deleteUserById(int userId) {
-        try {
-            Connection connection = ConnectDB.getConnection();
-            String sql = "UPDATE account SET isRemove = true WHERE id = ?";
-
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, userId);
-
-            int affectedRows = preparedStatement.executeUpdate();
-
-            return affectedRows > 0;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    // Xóa người dùng theo ID
-    public boolean reopenUserById(int userId) {
-        try {
-            Connection connection = ConnectDB.getConnection();
-            String sql = "UPDATE account SET isRemove = false WHERE id = ?";
-
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, userId);
-
-            int affectedRows = preparedStatement.executeUpdate();
-
-            return affectedRows > 0;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public Account getUserByID(int Id) {
         try {
@@ -238,12 +236,28 @@ public class UserDAO {
                 user.setNickname(resultSet.getString("nickname"));
                 user.setBio(resultSet.getString("bio"));
                 user.setAvatar(resultSet.getString("avatar"));
-
+                user.setRole(resultSet.getString("role"));
                 user.setLinkFB(resultSet.getString("linkfb"));
                 user.setLinkIns(resultSet.getString("linkins"));
 
             }
             return user;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void requestRole(int Id)
+    {
+        try {
+            Connection connection = ConnectDB.getConnection();
+            String sql = "UPDATE account SET requestRole = ?  WHERE id = ?  " ;
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setBoolean(1, true);
+            preparedStatement.setInt(2, Id);
+
+            int affectedRows = preparedStatement.executeUpdate();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -3,7 +3,6 @@ package com.example.qcan.model.bo;
 import com.example.qcan.model.bean.Account;
 import com.example.qcan.model.dao.UserDAO;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class UserBO {
@@ -47,5 +46,10 @@ public class UserBO {
     public boolean reopenUserById(int userId) {
         return userDAO.reopenUserById(userId);
     }
+    public void requestRole(int id)
+    {
+        userDAO.requestRole(id );
+    }
+
 
 }

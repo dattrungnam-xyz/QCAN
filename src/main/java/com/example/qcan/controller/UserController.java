@@ -19,6 +19,7 @@ import java.util.ArrayList;
 @WebServlet("/UserController")
 public class UserController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
         String destination = null;
         UserBO userBO = new UserBO();
         PostBO postBO = new PostBO();
@@ -26,7 +27,7 @@ public class UserController extends HttpServlet {
         String Action = (String) request.getParameter("Action");
         if(Action ==null)
         {
-            HttpSession session = request.getSession();
+            session = request.getSession();
 
             int IdSession =0;
 
@@ -114,15 +115,21 @@ public class UserController extends HttpServlet {
         }
         else if(Action.equals("Update"))
         {
-             destination = "/editProfile.jsp";
+            destination = "/editProfile.jsp";
         }
         else if (Action.equals("ChangePassword"))
         {
             destination = "/changePassword.jsp";
         }
+        else if(Action.equals("RequestRole"))
+        {
+
+            destination = "/requestRole.jsp";
+        }
 
 
-        HttpSession session = request.getSession();
+
+
         String username = (String)session.getAttribute("username");
         Account user = userBO.getAccount(username);
         request.setAttribute("user",user);
@@ -139,6 +146,10 @@ public class UserController extends HttpServlet {
         }else if(Action.equals("ChangePassword"))
         {
             changePassword(request,response);
+        }
+        else if(Action.equals("RequestRole"))
+        {
+            requestRole(request,response);
         }
 
 
@@ -196,11 +207,11 @@ public class UserController extends HttpServlet {
             destination = "/UserController?Action=ChangePassword&error=New password and password confirm does not match!";
         }
         else {
-           if(Id == null)
-           {
-               HttpSession session = request.getSession();
-               Id = (String)session.getAttribute("Id");
-           }
+            if(Id == null)
+            {
+                HttpSession session = request.getSession();
+                Id = (String)session.getAttribute("id");
+            }
             if(userBO.checkPassword(Integer.parseInt(Id),currentPassword ))
             {
                 //update password
@@ -211,6 +222,27 @@ public class UserController extends HttpServlet {
                 destination = "/UserController?Action=ChangePassword&error=Current password incorrect!";
             }
         }
+        response.sendRedirect(request.getContextPath() + destination);
+    }
+    private void requestRole(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+
+        UserBO userBO = new UserBO();
+        String destination = null;
+        HttpSession session = request.getSession();
+        int Id =(int) session.getAttribute("id");
+        Account user = userBO.getUser(Id);
+
+        if(user.getRole().equals("musician"))
+        {
+            destination = "/UserController?Action=RequestRole&error=This account is already a musician account.";
+        }
+        else
+        {
+            userBO.requestRole(Id);
+            destination = "/UserController?Action=RequestRole&message=Send request success.";
+        }
+
         response.sendRedirect(request.getContextPath() + destination);
     }
 }

@@ -36,9 +36,6 @@ public class CheckLoginController extends HttpServlet {
             session.setAttribute("isLogin", true);
             session.setAttribute("id", user.getId());
             session.setAttribute("username", user.getUsername());
-
-            System.out.println(user.getRole());
-
             // Set an attribute to indicate if the user is an admin
             if ("Admin".equals(user.getRole())) {
                 session.setAttribute("Admin", true);
