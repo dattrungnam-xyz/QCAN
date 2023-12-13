@@ -73,11 +73,11 @@
         <th>Email</th>
         <th>Fullname</th>
         <th>Nickname</th>
-        <th>Bio</th>
+<%--        <th>Bio</th>--%>
 <%--        <th>Avatar</th>--%>
         <th>Role</th>
-        <th>LinkFB</th>
-        <th>LinkIns</th>
+<%--        <th>LinkFB</th>--%>
+<%--        <th>LinkIns</th>--%>
         <th>IsRemove</th>
         <th>Actions</th>
     </tr>
@@ -92,11 +92,11 @@
         <td><%= StringUtils.defaultString(user.getEmail(), "") %></td>
         <td><%= StringUtils.defaultString(user.getFullname(), "") %></td>
         <td><%= StringUtils.defaultString(user.getNickname(), "") %></td>
-        <td><%= StringUtils.defaultString(user.getBio(), "") %></td>
+<%--        <td><%= StringUtils.defaultString(user.getBio(), "") %></td>--%>
 <%--        <td><%= StringUtils.defaultString(user.getAvatar(), "") %></td>--%>
         <td><%= StringUtils.defaultString(user.getRole(), "") %></td>
-        <td><%= StringUtils.defaultString(user.getLinkFB(), "") %></td>
-        <td><%= StringUtils.defaultString(user.getLinkIns(), "") %></td>
+<%--        <td><%= StringUtils.defaultString(user.getLinkFB(), "") %></td>--%>
+<%--        <td><%= StringUtils.defaultString(user.getLinkIns(), "") %></td>--%>
         <td><%= user.getisRemove() %></td>
         <td>
             <div class="button-container">
@@ -107,7 +107,7 @@
                     <button type="submit" class="delete-button">Xóa</button>
                 </form>
 
-                <!-- Nút Mở lại -->
+                <!-- Nút mở lại -->
                 <form action="AdminController" method="post">
                     <input type="hidden" name="action" value="bnt_reopen">
                     <input type="hidden" name="userId" value="<%=user.getId() %>">

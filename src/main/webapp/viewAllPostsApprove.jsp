@@ -64,7 +64,7 @@
   </style>
 
 <body>
-<h2>Xóa, mở người dùng quy phạm</h2>
+<h2>Phê duyệt đăng bài</h2>
 
 <table>
   <tr>
@@ -73,12 +73,12 @@
     <th>Email</th>
     <th>Fullname</th>
     <th>Nickname</th>
-    <th>Bio</th>
+<%--    <th>Bio</th>--%>
 <%--    <th>Avatar</th>--%>
     <th>Role</th>
-    <th>LinkFB</th>
-    <th>LinkIns</th>
-    <th>IsRemove</th>
+<%--    <th>LinkFB</th>--%>
+<%--    <th>LinkIns</th>--%>
+<%--    <th>IsRemove</th>--%>
     <th>requestRole</th>
     <th>Actions</th>
   </tr>
@@ -93,12 +93,12 @@
     <td><%= StringUtils.defaultString(user.getEmail(), "") %></td>
     <td><%= StringUtils.defaultString(user.getFullname(), "") %></td>
     <td><%= StringUtils.defaultString(user.getNickname(), "") %></td>
-    <td><%= StringUtils.defaultString(user.getBio(), "") %></td>
+<%--    <td><%= StringUtils.defaultString(user.getBio(), "") %></td>--%>
 <%--    <td><%= StringUtils.defaultString(user.getAvatar(), "") %></td>--%>
     <td><%= StringUtils.defaultString(user.getRole(), "") %></td>
-    <td><%= StringUtils.defaultString(user.getLinkFB(), "") %></td>
-    <td><%= StringUtils.defaultString(user.getLinkIns(), "") %></td>
-    <td><%= user.getisRemove() %></td>
+<%--    <td><%= StringUtils.defaultString(user.getLinkFB(), "") %></td>--%>
+<%--    <td><%= StringUtils.defaultString(user.getLinkIns(), "") %></td>--%>
+<%--    <td><%= user.getisRemove() %></td>--%>
     <td><%= user.getRequestRole() %></td>
     <td>
       <div class="button-container">

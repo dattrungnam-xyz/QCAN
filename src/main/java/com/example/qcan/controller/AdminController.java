@@ -84,7 +84,7 @@ public class AdminController extends HttpServlet {
         int userId = Integer.parseInt(request.getParameter("userId"));
         UserBO userBO = new UserBO();
         boolean deleted = userBO.deleteUserById(userId);
-        response.sendRedirect("./T3.jsp");
+        response.sendRedirect("./FinishDeleteUser.jsp");
     }
 
     //phe duyet dang bai user
@@ -92,21 +92,21 @@ public class AdminController extends HttpServlet {
         int userId = Integer.parseInt(request.getParameter("userId"));
         UserBO userBO = new UserBO();
         boolean approve = userBO.approveUser(userId);
-        response.sendRedirect("./T3.jsp");
+        response.sendRedirect("./FinishApprove.jsp");
     }
     //Khong phe duyet dang bai user
     private void unapproveUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int userId = Integer.parseInt(request.getParameter("userId"));
         UserBO userBO = new UserBO();
         boolean unapprove = userBO.unapproveUser(userId);
-        response.sendRedirect("./T3.jsp");
+        response.sendRedirect("./FinishUnApprove.jsp");
     }
 
     private void reopenUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int userId = Integer.parseInt(request.getParameter("userId"));
         UserBO userBO = new UserBO();
         boolean reopen = userBO.reopenUserById(userId);
-        response.sendRedirect("./T3.jsp");
+        response.sendRedirect("./FinishReOpenUser.jsp");
     }
     private void viewAllPosts(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PostBO postBO = new PostBO();
@@ -119,6 +119,6 @@ public class AdminController extends HttpServlet {
         int postId = Integer.parseInt(request.getParameter("postId"));
         PostBO postBO = new PostBO();
         postBO.deletePost(postId);
-        response.sendRedirect("./T3.jsp");
+        response.sendRedirect("./FinishDeletePost.jsp");
     }
 }
